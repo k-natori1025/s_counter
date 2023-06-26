@@ -1,0 +1,84 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.tab {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0px auto;
+  width: 90%;
+}
+
+.tab__label {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.tab__label li a {
+  display: inline-block;
+  width: 130px;
+  text-align: center;
+  padding: 8px 0;
+  color: #333;
+  text-decoration: none;
+  border-radius: 10px 10px 0 0;
+}
+
+.tab__label li a.active {
+  background: #E6F0FF;
+  background-color: rgba(230,225,225, 0.6);
+}
+
+.tab__label li a:not(.active):hover {
+  opacity: 0.5;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.tab__content {
+  background: #E6F0FF;
+  font-size: 16px;
+  min-height: 150px;
+  padding: 15px;
+  display: block;
+  background-color: rgba(230,225,225, 0.6);
+}
