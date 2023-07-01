@@ -4,7 +4,8 @@ class Api::V1::SessionsController < ApplicationController
     store = Store.find_by(phone_number: session_params[:phone_number])
 
     if store && store.authenticate(session_params[:password])
-      log_in store
+      # log_in store
+      session[:store_id] = store.id
       render json: { logged_in: true, store: store }
     else
       render json: { status: 401, errors: ['認証に失敗しました。', '正しいメールアドレス・パスワードを入力し直すか、新規登録を行ってください。'] }

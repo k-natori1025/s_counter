@@ -1,13 +1,14 @@
 class Api::V1::EventsController < ApplicationController
 
   def index
-    events = Event.order(created_at: :desc)
+    store_id = params[:store_id]
+    events = Event.where(store_id: store_id)
     render json: events 
   end
 
   def create
     # @event = Event.new(event_params)
-    @event = current_store.events.new(event_params)
+    @event = Event.new(event_params)
 
     if @event.save
       render json: { status: :created, event: @event }
@@ -18,7 +19,9 @@ class Api::V1::EventsController < ApplicationController
 
   def destroy
     if Event.destroy(params[:id])
-      head :no_content
+      store_id = params[:store_id]
+      events = Event.where(store_id: store_id)
+      render json: events
     else
       render json: { error: "Failed to destroy" }, status: 422
     end
@@ -35,7 +38,7 @@ class Api::V1::EventsController < ApplicationController
   private
 
     def event_params
-      params.require(:event).permit(:event_name, :time, :person, :heat)
+      params.require(:event).permit(:event_name, :time, :person, :heat, :store_id)
     end
 
 end

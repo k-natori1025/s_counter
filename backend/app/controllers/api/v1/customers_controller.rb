@@ -1,13 +1,13 @@
 class Api::V1::CustomersController < ApplicationController
 
   def index
-    customers = Customer.order(created_at: :desc)
+    store_id = params[:store_id]
+    customers = Customer.where(store_id: store_id)
     render json: customers 
   end
 
   def create
-    # @customer = Customer.new(customer_params)
-    @customer = current_store.customers.new(customer_params)
+    @customer = Customer.new(customer_params)
     if @customer.save
       render json: { status: :created, customer: @customer }
     else
@@ -17,7 +17,9 @@ class Api::V1::CustomersController < ApplicationController
 
   def destroy
     if Customer.destroy(params[:id])
-      head :no_content
+      store_id = params[:store_id]
+      customers = Customer.where(store_id: store_id)
+      render json: customers
     else
       render json: { error: "Failed to destroy" }, status: 422
     end
@@ -34,7 +36,7 @@ class Api::V1::CustomersController < ApplicationController
   private
 
     def customer_params
-      params.require(:customer).permit(:locker_number, :usage_time)
+      params.require(:customer).permit(:locker_number, :usage_time, :store_id)
     end
 
 end

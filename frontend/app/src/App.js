@@ -11,16 +11,21 @@ import axios from 'axios';
 import AddEvent from './pages/AddEvent';
 import SignUpForStore from './components/auth/SignUpForStore';
 import LoginForStore from './components/auth/LoginForStore';
+import SearchSauna from './pages/SearchSauna';
+import SaunaDetail from './pages/SaunaDetail'
 
 function App() {
   const [loggedInStatus, setLoggedInStatus] = useState("未ログイン")
   const [store, setStore] = useState({})
+  const [stores, setStores] = useState([])
   const navigate = useNavigate()
 
   // Store用ログイン
   const handleLogin = (data) => {
     console.log("ログイン成功")
     setStore(data.store)
+    window.sessionStorage.setItem(['store_id'],[data.store.id]);
+    console.log(window.sessionStorage.getItem(['store_id']));
     console.log(data.store)
     setLoggedInStatus(data.store.store_name)
   }
@@ -40,7 +45,9 @@ function App() {
   }
 
   const checkLoginStatus = () => {
-    axios.get("http://localhost:3001/api/v1/logged_in", { withCredentials: true }) 
+    axios.get("http://localhost:3001/api/v1/logged_in", 
+      { withCredentials: true }
+    ) 
       .then(resp => {
         if(resp.data.logged_in) {
           console.log("ログインステータスをチェックしました")
@@ -58,6 +65,15 @@ function App() {
 
   useEffect(() => {
     checkLoginStatus()
+  }, [])
+
+  useEffect(()=> {
+    axios.get('http://localhost:3001/api/v1/stores')
+    .then( resp => {
+      const newList = JSON.parse(JSON.stringify(resp.data))
+      console.log(newList)
+      setStores(newList)
+    })
   }, [])
 
   return (
@@ -89,12 +105,28 @@ function App() {
             element={<Dashboard loggedInStatus={loggedInStatus} store={store} />} 
           />
           <Route 
+            path="/saunadetail/:id" 
+            element={<SaunaDetail stores={stores} />} 
+          />
+          <Route 
             exact path="/addevent" 
             element={<AddEvent store={store} />} 
           />
           <Route 
             exact path='/tabs' element={<BasicTabs/>} 
           />
+           <Route 
+            exact path='/searchsauna' element={<SearchSauna/>} 
+          />
+          {/* <Route 
+            exact path='/dashboard/customers' element={<CustomersList/>} 
+          />
+          <Route 
+            exact path='/dashboard/situations' element={<Situation/>} 
+          />
+           <Route 
+            exact path='/dashboard/events' element={<EventsList/>} 
+          /> */}
         </Route>
       </Routes>
     </div>

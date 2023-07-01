@@ -9,18 +9,18 @@ function CustomersList(props){
     { field: 'lockerNumber', headerName: 'ロッカー番号', width: 250},
     { field: 'entryTime', headerName: 'ご利用開始時間', width: 250 },
     { field: 'usageTime', headerName: 'ご利用時間', width: 250 },
-    // { field: 'exitTime', headerName: 'ご退室時間', width: 250 },
+    { field: 'exitTime', headerName: 'ご退室時間', width: 250 },
     { field: 'button', headerName: '退室ボタン', width: 250, 
-      renderCell: (params) => <Button onClick={ e => removeCustomer(params.id, e)} style={{ color: "black", backgroundColor: "#bdbdbd" }}>退室</Button>
+      renderCell: (params) => <Button onClick={ e => removeCustomer(params.id, e)} style={{ color: "white", backgroundColor: "#f44336" }}>ととのった</Button>
     },
   ];
 
   const handleToDate=(date)=>{
     date = new Date(date);
     if(date.getMinutes() < 10){
-        date = date.getFullYear()+"/"+(date.getMonth()%12+1)+"/"+date.getDate()+" "+date.getHours()+":0"+date.getMinutes()
+        date = (date.getMonth()%12+1)+"/"+date.getDate()+" "+date.getHours()+":0"+date.getMinutes()
     } else {
-        date = date.getFullYear()+"/"+(date.getMonth()%12+1)+"/"+date.getDate()+" "+date.getHours()+":"+date.getMinutes()
+        date = (date.getMonth()%12+1)+"/"+date.getDate()+" "+date.getHours()+":"+date.getMinutes()
     }
     return date;
   }
@@ -28,7 +28,9 @@ function CustomersList(props){
   const [ customers, setCustomers ] = useState([])
 
   useEffect(()=> {
-    axios.get('http://localhost:3001/api/v1/customers')
+    axios.get('http://localhost:3001/api/v1/customers', 
+      {params: {store_id: window.sessionStorage.getItem(['store_id']) }}
+    )
     .then( resp => {
       const newList = JSON.parse(JSON.stringify(resp.data))
       console.log(newList)
@@ -38,24 +40,35 @@ function CustomersList(props){
       console.log(e)
     })
   }, [])
- 
+
+  const calcExitTime = (created_at, usage_time) => {
+    const date = new Date(created_at);
+    const minutesToAdd = usage_time;
+    date.setMinutes(date.getMinutes() + minutesToAdd);
+    // console.log(date.toLocaleString());
+    return date.toLocaleString()
+  } 
+
   const row = customers.map( customer => (
     { id: customer.id,
       lockerNumber: customer.locker_number, 
       entryTime: handleToDate(customer.created_at), 
-      usageTime: customer.usage_time
+      usageTime: customer.usage_time,
+      exitTime: handleToDate(calcExitTime(customer.created_at, customer.usage_time))
     }
   ))
 
   const removeCustomer = (id, e) => {
     const sure = window.confirm('Are you sure?')
     if(sure) {
-      axios.delete(`http://localhost:3001/api/v1/customers/${id}`)
+      axios.delete(`http://localhost:3001/api/v1/customers/${id}`,
+        {params: {store_id: window.sessionStorage.getItem(['store_id']) }}
+      )
       .then( resp => {
         console.log('削除しました')
-        // const newList = JSON.parse(JSON.stringify(resp.data))
-        // console.log(newList)
-        // setCustomers(newList)
+        const newList = JSON.parse(JSON.stringify(resp.data))
+        console.log(newList)
+        setCustomers(newList)
       })
       .catch( e => {
         console.log(e)
@@ -77,7 +90,7 @@ function CustomersList(props){
   }
 
   return (<>
-    <AddCustomer store={props.store} />
+    <AddCustomer store={props.store} customers={customers} setCustomers={setCustomers} />
     <DataGrid 
       rows={row}
       columns={columns}

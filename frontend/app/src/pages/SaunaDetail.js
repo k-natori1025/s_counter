@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import '../App.css'
-import Situation from '../components/Situation'
-import CustomersList from '../components/CustomersList'
-import EventsList from '../components/EventsList'
+import SituationForUser from '../components/SituationForUser'
+import EventsListForUser from '../components/EventsListForUser'
 import { Box } from '@mui/material'
+import { useParams } from 'react-router-dom'
 
-const Dashboard = (props) => {
+const SaunaDetail = (props) => {
 
   const [active, setActive] = useState(1)
 
@@ -15,18 +15,23 @@ const Dashboard = (props) => {
   }
 
   const items = [
-    {id: 1, title: "入退室管理", path: "dashboard/customers"},
-    {id: 2, title: "混雑状況", path: "dashboard/situations"},  
-    {id: 3, title: "イベント情報", path: "dashboard/events"}
+    {id: 1, title: "混雑状況", path: "dashboard/situations"},  
+    {id: 2, title: "イベント情報", path: "dashboard/events"}
   ]
 
+  const params = useParams()
+
+  const store = props.stores.find( store => {
+    return store.id === parseInt(params.id, 10)
+  })
+  
   return(<>
     <Box sx={{
-        backgroundImage: "url('top2.jpeg')", 
+        backgroundImage : `url(${store.image.url})`, 
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
         height: 1100,
-        opacity: 0.8
+        opacity: 0.8 
       }}>
       <section className="tab">
       <ul className="tab__label">
@@ -39,17 +44,12 @@ const Dashboard = (props) => {
      
       { active === 1 && 
         <div className="tab__content">
-          <CustomersList store={props.store} />
-        </div>
-      }
-      { active === 2 && 
-        <div className="tab__content">
-          <Situation store={props.store} />
+          <SituationForUser store={store} />
         </div>
       } 
-      { active === 3 && 
+      { active === 2 && 
         <div className="tab__content">
-          <EventsList store={props.store} />
+          <EventsListForUser store={store} />
         </div>
       }
       
@@ -60,4 +60,4 @@ const Dashboard = (props) => {
   </>)
 }
 
-export default Dashboard
+export default SaunaDetail

@@ -8,22 +8,22 @@ import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import { Link } from 'react-router-dom';
 
-function EventsList(props){
+function EventsListForUser(props){
     const columns = [
     { field: 'eventName', headerName: 'イベント名', width: 240},
     { field: 'time', headerName: '開始時間', width: 240 },
     { field: 'person', headerName: '担当者', width: 240 },
     { field: 'heat', headerName: '熱さ', width: 240 },
-    { field: 'button', headerName: '削除ボタン', width: 240, 
-      renderCell: (params) => <Button onClick={ e => removeEvent(params.id, e)} style={{ color: "white", backgroundColor: "#f44336" }}>削除</Button>
-    },
+    // { field: 'button', headerName: '削除ボタン', width: 240, 
+    //   renderCell: (params) => <Button onClick={ e => removeEvent(params.id, e)} style={{ color: "white", backgroundColor: "#f44336" }}>削除</Button>
+    // },
   ];
 
   const [ events, setEvents ] = useState([])
 
   useEffect(()=> {
     axios.get('http://localhost:3001/api/v1/events',
-      {params: {store_id: window.sessionStorage.getItem(['store_id']) }}
+      {params: {store_id: props.store.id }}
     )
     .then( resp => {
       const newList = JSON.parse(JSON.stringify(resp.data))
@@ -78,24 +78,24 @@ function EventsList(props){
   return (<>
     ログイン中の店舗のID:{props.store.id}
     <Box sx={{ '& > :not(style)': { m: 1 } }}>
-      <Fab color="primary" aria-label="add" component={Link} to='/addevent'>
+      {/* <Fab color="primary" aria-label="add" component={Link} to='/addevent'>
         <AddIcon />
-      </Fab>
+      </Fab> */}
     </Box>
     <DataGrid
       rows={row}
       columns={columns}
       sx={{height:"700px",fontSize:18,border:"none",backgroundColor:"#fafafa",ml:5,mr:5}}
     />
-    <Grid container justifyContent='end' alignItems='center' sx={{mt: 5, height: 60}}>
+    {/* <Grid container justifyContent='end' alignItems='center' sx={{mt: 5, height: 60}}>
       <Button 
         style={{ color: "white", backgroundColor: "#f44336", width: "30%", height: "100%" }}
         onClick={removeAllEvents}
       >
         一括削除
       </Button>
-    </Grid>
+    </Grid> */}
   </>)
 }
 
-export default EventsList
+export default EventsListForUser

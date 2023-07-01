@@ -10,12 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_25_111355) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_29_105342) do
   create_table "customers", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "usage_time"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "locker_number"
+    t.string "locker_number"
     t.bigint "store_id"
     t.index ["store_id"], name: "index_customers_on_store_id"
   end
@@ -42,6 +42,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_25_111355) do
     t.integer "number_of_lockers"
     t.string "password"
     t.string "password_digest"
+    t.text "description"
   end
 
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|

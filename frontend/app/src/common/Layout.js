@@ -5,12 +5,17 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Outlet } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 import { CardMedia, Button } from '@mui/material';
 
 const theme = createTheme();
 
 export default function Layout(props) {
+
+  const navigate = useNavigate();
+  const goBackToTop = () => {
+    navigate('/')
+  }
 
   return (<>
     <ThemeProvider theme={theme}>
@@ -18,14 +23,14 @@ export default function Layout(props) {
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="relative">
           <Toolbar>
-            <CardMedia component='img' image='logo_white.png' sx={{ width: 80, height: 80 }} />
+            <CardMedia component='img' image='logo_white.png' sx={{ width: 80, height: 80, cursor: "pointer" }} onClick={goBackToTop} />
             <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
               サウナ混雑状況把握アプリ
             </Typography>
             <Typography variant="p" color="inherit" noWrap>
-              ログイン状態: {props.loggedInStatus}
+              {props.loggedInStatus}
             </Typography>
-            <Button type="button" style={{ color: "black", backgroundColor: "#bdbdbd", marginLeft: "15px"}} onClick={props.handleLogoutClick}>Logout</Button>
+            <Button type="submit" variant="contained" style={{ backgroundColor: "#673ab7", marginLeft: "15px"}} onClick={props.handleLogoutClick}>Logout</Button>
           </Toolbar>
         </AppBar>
       </Box>

@@ -5,8 +5,6 @@ import { Grid, Container, Box, Button } from '@mui/material';
 import axios from 'axios'
 import { useState } from 'react';
 
-const lockerNumbers = [ '1', '2', '3', '4', '5', '6' ]
-
 const usageTimes = [ '60', '90', '120'];
 
 export default function AddCustomer(props) {
@@ -26,6 +24,10 @@ export default function AddCustomer(props) {
     }) 
     .then( resp => {
       console.log('registration response', resp)
+      const newCustomer = resp.data.customer
+      props.setCustomers([...props.customers, newCustomer])
+      setLockerNumber(null)
+      setUsageTime(null)
       })
     .catch(e => {
       console.log(e)
@@ -34,20 +36,21 @@ export default function AddCustomer(props) {
   
 
   return (<>
-    AddCustomerのログイン中の店舗ID:{props.store.id}
+    ログイン中の店舗ID:{props.store.id}
     <Container component="section" maxWidth="lg" sx={{ mt:1, mb:4 }}>
       <Box component="form" onSubmit={addCustomer} >
         <Grid container spacing={1}>
           <Grid item xs={12} sm={6} md={4} >
-            <Autocomplete
-              disablePortal
-              id="locker_number"
-              options={lockerNumbers}
-              // sx={{ backgroundColor:"#fafafa", overflow:"hidden" }}
-              renderInput={(params) => <TextField {...params} label="LockerNumber" />}
+            <Box
+              sx={{'& > :not(style)': { width: '100%' }} }
+              noValidate
+              autoComplete="off"
+              textAlign="center"
               value={lockerNumber}
-              onChange={(event, newLockerNumber) => setLockerNumber(newLockerNumber)}
-            />
+              onChange={(e) => setLockerNumber(e.target.value)}
+            >
+            <TextField id="outlined-basic" label="ロッカー番号" variant="outlined" />
+            </Box>
           </Grid>
           <Grid item xs={12} sm={6} md={4} >
             <Autocomplete

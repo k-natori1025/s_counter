@@ -4,13 +4,13 @@ import ShowTime from './ShowTime'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 
-function Situation(props) {
+function SituationForUser(props) {
 
   const [ customers, setCustomers ] = useState([])
 
   useEffect(()=> {
     axios.get('http://localhost:3001/api/v1/customers', 
-      {params: {store_id: window.sessionStorage.getItem(['store_id']) }}
+          {params: {store_id: props.store.id }}
     )
     .then( resp => {
       const newList = JSON.parse(JSON.stringify(resp.data))
@@ -122,4 +122,4 @@ function Situation(props) {
   </>)
 }
 
-export default Situation
+export default SituationForUser

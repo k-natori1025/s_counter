@@ -25,10 +25,9 @@ export default function SignUpForStore(props) {
   // const [address, setAdress] = useState("")
   const [numberOfLockers, setNumberOfLockers] = useState("") 
   const [image, setImage] = useState("")
+  const [ description, setDescription ] = useState("")
 
   const [preview, setPreview] = useState("")
-  const [store, setStore] = useState({})
-  const [loggedInStatus, setLoggedInStatus] = useState("未ログイン")
   const navigate = useNavigate()
 
   const handleSuccessfulAuthentication = (data) => {
@@ -36,20 +35,18 @@ export default function SignUpForStore(props) {
     navigate("/dashboard")
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     console.log("イベント発火")
     event.preventDefault()
-    axios.post('http://localhost:3001/api/v1/stores', 
-      {
-        store: {
-            store_name: storeName,
-            phone_number: phoneNumber, 
-            password: password, 
-            password_confirmation: passwordConfirmation,
-            number_of_lockers: numberOfLockers,
-            image: image
-        }
-      },
+    const data = await createFormData()
+
+    const config = {
+      headers: {
+        'content-type': 'multipart/form-data'
+      }
+    }
+
+    axios.post('http://localhost:3001/api/v1/stores', data, config,
       { withCredentials: true }
     ).then(resp=> {
         console.log('registration response', resp)
@@ -67,9 +64,23 @@ export default function SignUpForStore(props) {
     console.log(file)
     setPreview(window.URL.createObjectURL(file))
     const imageName = e.target.files[0].name
-    setImage(imageName)
+    console.log(imageName)
+    setImage(file)
   }
-  
+
+  const createFormData = () => {    
+    const formData = new FormData()    
+    formData.append('store[store_name]', storeName)
+    formData.append('store[phone_number]', phoneNumber)
+    formData.append('store[password]', password)
+    formData.append('store[password_confirmation]', passwordConfirmation)   
+    formData.append('store[number_of_lockers]', numberOfLockers)          
+    formData.append('store[image]', image)
+    formData.append('store[description]', description)
+    console.log(formData)
+    return formData
+  }
+
   return (<>
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
@@ -160,6 +171,19 @@ export default function SignUpForStore(props) {
                 {preview?
                   <img src={preview} alt="preview" style={{width: "150px", height: "100px"}} />
                   : null}
+              </Grid>
+              <Grid item xs={12}>
+                <Box>
+                  施設説明: <br/>
+                  <TextField
+                    multiline
+                    fullWidth
+                    rows={4}
+                    name="description"
+                    label="description"
+                    value={description}
+                    onChange={ event => setDescription(event.target.value)} />
+                </Box>
               </Grid>
             </Grid>
             <Button

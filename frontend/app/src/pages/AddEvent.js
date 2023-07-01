@@ -4,24 +4,30 @@ import TextField from '@mui/material/TextField';
 import axios from 'axios';
 import { useState } from 'react';
 import { Grid, Button, Container } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
-export default function AddEvent() {
+export default function AddEvent(props) {
   const [ eventName, setEventName ] = useState(null)
   const [ time, setTime ] = useState(null)
   const [ person, setPerson ] = useState(null)
   const [ heat, setHeat ] = useState(null)
 
-  const addEvent = () => {
+  const navigate = useNavigate()
+
+  const addEvent = (e) => {
+    e.preventDefault()
     axios.post('http://localhost:3001/api/v1/events', {
       event: {
         event_name: eventName,
         time: time,
         person: person,
         heat: heat,
+        store_id: props.store.id
       }
     })
     .then( resp => {
       console.log('registration response', resp)
+      navigate('/dashboard')
       })
     .catch(e => {
       console.log(e)
@@ -48,7 +54,7 @@ export default function AddEvent() {
           </Grid>
           <Grid item xs={12} >
             <Box
-              component="form"
+              // component="form"
               sx={{'& > :not(style)': { m: 1, width: '50%' },}}
               noValidate
               autoComplete="off"
@@ -61,7 +67,7 @@ export default function AddEvent() {
           </Grid>
           <Grid item xs={12} >
             <Box
-              component="form"
+              // component="form"
               sx={{'& > :not(style)': { m: 1, width: '50%' },}}
               noValidate
               autoComplete="off"
@@ -74,7 +80,7 @@ export default function AddEvent() {
           </Grid>
           <Grid item xs={12} >
             <Box
-              component="form"
+              // component="form"
               sx={{'& > :not(style)': { m: 1, width: '50%' },}}
               noValidate
               autoComplete="off"

@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from "react";
+import { Grid } from "@mui/material";
 
 function ShowTime() {
 
@@ -25,8 +26,17 @@ function ShowTime() {
   },[])
 
   return (<>
-    <h1>{date}</h1><br/>
-    <h1>{time}</h1>
+    <Grid container>
+      <Grid item xs={12} textAlign="center" sx={{ height: "30%", pt: 5 }} fontSize={20}>
+        現時刻
+      </Grid>
+      <Grid item xs={12} textAlign="center" sx={{ height: "10%", pt: 2 }} fontSize={20} >
+        {date}
+      </Grid>
+      <Grid item xs={12} textAlign="center" sx={{ height: "70%", pt: 2 }} fontSize={40}>
+        {time}
+      </Grid>
+    </Grid>
   </>);
 }
 
