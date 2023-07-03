@@ -112,7 +112,7 @@ export default function LoginForStore(props) {
             </Button>
             <Grid container>
               <Grid item>
-                <Link href="http://localhost:3000/signupforstore" variant="body2">
+                <Link href="/signupforstore" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>

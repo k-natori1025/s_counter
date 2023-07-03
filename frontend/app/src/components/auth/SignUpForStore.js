@@ -197,7 +197,7 @@ export default function SignUpForStore(props) {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="http://localhost:3000/loginforstore" variant="body2">
+                <Link href="/loginforstore" variant="body2">
                   Already have an account? Log in
                 </Link>
               </Grid>
