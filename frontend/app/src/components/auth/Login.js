@@ -13,6 +13,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react'
+import { API_HOST } from '../../constants';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 
@@ -35,7 +36,7 @@ export default function Login(props) {
     console.log("イベント発火")
     event.preventDefault()
     
-    axios.post('http://localhost:3001/api/v1/login', 
+    axios.post(`${API_HOST}/api/v1/login`, 
       {
         user: {
             email: email, 

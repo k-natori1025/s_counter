@@ -11,6 +11,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react'
+import { API_HOST } from '../../constants';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 
@@ -46,7 +47,7 @@ export default function SignUpForStore(props) {
       }
     }
 
-    axios.post('http://localhost:3001/api/v1/stores', data, config,
+    axios.post(`${API_HOST}/api/v1/stores`, data, config,
       { withCredentials: true }
     ).then(resp=> {
         console.log('registration response', resp)

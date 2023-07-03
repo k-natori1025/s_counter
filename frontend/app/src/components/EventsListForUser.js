@@ -1,6 +1,7 @@
 import { Grid, Button } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import { useEffect, useState } from 'react';
+import { API_HOST } from '../constants';
 import axios from 'axios';
 import * as React from 'react';
 import Box from '@mui/material/Box';
@@ -22,7 +23,7 @@ function EventsListForUser(props){
   const [ events, setEvents ] = useState([])
 
   useEffect(()=> {
-    axios.get('http://localhost:3001/api/v1/events',
+    axios.get(`${API_HOST}/api/v1/events`,
       {params: {store_id: props.store.id }}
     )
     .then( resp => {
@@ -47,7 +48,7 @@ function EventsListForUser(props){
   const removeEvent = (id, e) => {
     const sure = window.confirm('Are you sure?')
     if(sure) {
-      axios.delete(`http://localhost:3001/api/v1/events/${id}`,
+      axios.delete(`${API_HOST}/api/v1/events/${id}`,
         {params: {store_id: window.sessionStorage.getItem(['store_id']) }}
       )
       .then( resp => {
@@ -65,7 +66,7 @@ function EventsListForUser(props){
   const removeAllEvents = () => {
     const sure = window.confirm('Are you sure?')
     if(sure) {
-      axios.delete('http://localhost:3001/api/v1/events/destroy_all')
+      axios.delete(`${API_HOST}/api/v1/events/destroy_all`)
       .then( resp => {
         setEvents([])
       })

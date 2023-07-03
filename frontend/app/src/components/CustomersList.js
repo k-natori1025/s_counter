@@ -2,6 +2,7 @@ import { Grid, Button } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import AddCustomer from './AddCustomer';
 import { useEffect, useState } from 'react';
+import { API_HOST } from '../constants'; 
 import axios from 'axios';
 
 function CustomersList(props){
@@ -28,7 +29,7 @@ function CustomersList(props){
   const [ customers, setCustomers ] = useState([])
 
   useEffect(()=> {
-    axios.get('http://localhost:3001/api/v1/customers', 
+    axios.get(`${API_HOST}/api/v1/customers`, 
       {params: {store_id: window.sessionStorage.getItem(['store_id']) }}
     )
     .then( resp => {
@@ -61,7 +62,7 @@ function CustomersList(props){
   const removeCustomer = (id, e) => {
     const sure = window.confirm('Are you sure?')
     if(sure) {
-      axios.delete(`http://localhost:3001/api/v1/customers/${id}`,
+      axios.delete(`${API_HOST}/api/v1/customers/${id}`,
         {params: {store_id: window.sessionStorage.getItem(['store_id']) }}
       )
       .then( resp => {
@@ -79,7 +80,7 @@ function CustomersList(props){
   const removeAllCustomers = () => {
     const sure = window.confirm('Are you sure?')
     if(sure) {
-      axios.delete('http://localhost:3001/api/v1/customers/destroy_all')
+      axios.delete(`${API_HOST}/api/v1/customers/destroy_all`)
       .then( resp => {
         setCustomers([])
       })

@@ -2,6 +2,7 @@ import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { Grid, Container, Box, Button } from '@mui/material';
+import { API_HOST } from '../constants';
 import axios from 'axios'
 import { useState } from 'react';
 
@@ -15,7 +16,7 @@ export default function AddCustomer(props) {
   const addCustomer = (e) => {
     e.preventDefault()
     console.log("addCustomer")
-    axios.post('http://localhost:3001/api/v1/customers', {
+    axios.post(`${API_HOST}/api/v1/customers`, {
       customer: {
         locker_number: lockerNumber,
         usage_time: usageTime,

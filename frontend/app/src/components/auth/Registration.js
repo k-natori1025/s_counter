@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { API_HOST } from '../../constants'
 import axios from 'axios'
 
 function Registration(props) {
@@ -11,7 +12,7 @@ function Registration(props) {
     console.log("イベント発火")
     event.preventDefault()
     // `${process.env.REACT_APP_API_SERVE}/registrations`
-    axios.post('http://localhost:3001/api/v1/registrations', 
+    axios.post(`${API_HOST}/api/v1/registrations`, 
       {
         user: {
             email: email, 

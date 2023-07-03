@@ -11,6 +11,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react'
+import { API_HOST } from '../../constants';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 
@@ -34,7 +35,7 @@ export default function SignUp(props) {
     console.log("イベント発火")
     event.preventDefault()
     // `${process.env.REACT_APP_API_SERVE}/registrations`
-    axios.post('http://localhost:3001/api/v1/registrations', 
+    axios.post(`${API_HOST}/api/v1/registrations`, 
       {
         user: {
             name: name,

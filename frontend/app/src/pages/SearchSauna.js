@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { Container, Box, Typography, TextField, Grid, Card, CardMedia, CardContent, CardActions, Button } from '@mui/material'
+import { API_HOST } from '../constants';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -24,7 +25,7 @@ function SearchSauna() {
   }
 
   useEffect(()=> {
-    axios.get('http://localhost:3001/api/v1/stores')
+    axios.get(`${API_HOST}/api/v1/stores`)
     .then( resp => {
       const newList = JSON.parse(JSON.stringify(resp.data))
       console.log(newList)

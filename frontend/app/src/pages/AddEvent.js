@@ -2,6 +2,7 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import axios from 'axios';
+import { API_HOST } from '../constants';
 import { useState } from 'react';
 import { Grid, Button, Container } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
@@ -16,7 +17,7 @@ export default function AddEvent(props) {
 
   const addEvent = (e) => {
     e.preventDefault()
-    axios.post('http://localhost:3001/api/v1/events', {
+    axios.post(`${API_HOST}/api/v1/events`, {
       event: {
         event_name: eventName,
         time: time,

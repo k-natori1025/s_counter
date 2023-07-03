@@ -2,6 +2,7 @@ import React from 'react'
 import { Container, Grid, Card, Typography, Box, CardMedia } from '@mui/material'
 import ShowTime from './ShowTime'
 import { useState, useEffect } from 'react'
+import { API_HOST } from '../constants'
 import axios from 'axios'
 
 function SituationForUser(props) {
@@ -9,7 +10,7 @@ function SituationForUser(props) {
   const [ customers, setCustomers ] = useState([])
 
   useEffect(()=> {
-    axios.get('http://localhost:3001/api/v1/customers', 
+    axios.get(`${API_HOST}/api/v1/customers`, 
           {params: {store_id: props.store.id }}
     )
     .then( resp => {

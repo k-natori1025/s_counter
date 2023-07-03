@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import './App.css';
+import { API_HOST } from './constants';
 import Top from './pages/Top'
 import SignUp from './components/auth/SignUp'
 import Login from './components/auth/Login';
@@ -38,14 +39,14 @@ function App() {
 
   const handleLogoutClick = () => {
     console.log("ログアウトボタンが押されました")
-    axios.delete("http://localhost:3001/api/v1/logout", { withCredentials: true})
+    axios.delete(`${API_HOST}/api/v1/logout`, { withCredentials: true})
     .then(resp => {
       handleLogout()
     }).catch(error => console.log("ログアウトエラー", error))
   }
 
   const checkLoginStatus = () => {
-    axios.get("http://localhost:3001/api/v1/logged_in", 
+    axios.get(`${API_HOST}/api/v1/logged_in`, 
       { withCredentials: true }
     ) 
       .then(resp => {
@@ -68,7 +69,7 @@ function App() {
   }, [])
 
   useEffect(()=> {
-    axios.get('http://localhost:3001/api/v1/stores')
+    axios.get(`${API_HOST}/api/v1/stores`)
     .then( resp => {
       const newList = JSON.parse(JSON.stringify(resp.data))
       console.log(newList)
