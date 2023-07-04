@@ -14,6 +14,8 @@ import SignUpForStore from './components/auth/SignUpForStore';
 import LoginForStore from './components/auth/LoginForStore';
 import SearchSauna from './pages/SearchSauna';
 import SaunaDetail from './pages/SaunaDetail'
+import TopForCustomers from './pages/TopForCustomers'
+import LayoutForCustomers from './common/LayoutForCustomers'
 
 function App() {
   const [loggedInStatus, setLoggedInStatus] = useState("未ログイン")
@@ -106,28 +108,25 @@ function App() {
             element={<Dashboard loggedInStatus={loggedInStatus} store={store} />} 
           />
           <Route 
-            path="/saunadetail/:id" 
-            element={<SaunaDetail stores={stores} />} 
-          />
-          <Route 
             exact path="/addevent" 
             element={<AddEvent store={store} />} 
-          />
-          <Route 
-            exact path='/tabs' element={<BasicTabs/>} 
           />
            <Route 
             exact path='/searchsauna' element={<SearchSauna/>} 
           />
-          {/* <Route 
-            exact path='/dashboard/customers' element={<CustomersList/>} 
-          />
+        </Route>
+        <Route element={<LayoutForCustomers />}  >
           <Route 
-            exact path='/dashboard/situations' element={<Situation/>} 
+            exact path="/topforcustomers" 
+            element={<TopForCustomers />} 
           />
            <Route 
-            exact path='/dashboard/events' element={<EventsList/>} 
-          /> */}
+            exact path='/searchsauna' element={<SearchSauna/>} 
+          />
+          <Route  
+            path="/saunadetail/:id" 
+            element={<SaunaDetail stores={stores} />} 
+          />
         </Route>
       </Routes>
     </div>
