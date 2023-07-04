@@ -30,7 +30,7 @@ export default function Layout(props) {
             <Typography variant="p" color="inherit" noWrap>
               {props.loggedInStatus}
             </Typography>
-            <Button type="submit" variant="contained" style={{ backgroundColor: "#673ab7", marginLeft: "15px"}} onClick={props.handleLogoutClick}>Logout</Button>
+            <Button variant="contained" style={{ backgroundColor: "#673ab7", marginLeft: "15px"}} onClick={props.handleLogoutClick}>Logout</Button>
           </Toolbar>
         </AppBar>
       </Box>

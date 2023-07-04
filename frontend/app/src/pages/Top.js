@@ -30,7 +30,7 @@ function Top() {
             </Grid>
             <Grid item xs={12} >
               <Typography sx={{ fontSize: 15, mb: 4 }} color="white" textAlign="center" >
-                ログインはこちらから<br/>
+                店舗ログインはこちらから<br/>
                 <Button variant="contained" sx={{ width: 300}} component={Link} to="/loginforstore">
                   ログイン
                 </Button>
@@ -38,9 +38,17 @@ function Top() {
             </Grid>
             <Grid item xs={12}>
               <Typography sx={{ fontSize: 15}} color="white" textAlign="center">
-                新規登録はこちらから<br/>
+                店舗新規登録はこちらから<br/>
                 <Button variant="contained" sx={{ width: 300}} component={Link} to="/signupforstore">
                   新規登録
+                </Button>
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography sx={{ fontSize: 15, mt: 4 }} color="white" textAlign="center">
+                サウナ利用者の方はこちらへ<br/>
+                <Button variant="contained" sx={{ width: 300}} component={Link} to="/topforcustomers">
+                  お客さん用トップページ
                 </Button>
               </Typography>
             </Grid>
