@@ -77,25 +77,13 @@ function EventsListForUser(props){
   }
 
   return (<>
-    ログイン中の店舗のID:{props.store.id}
     <Box sx={{ '& > :not(style)': { m: 1 } }}>
-      {/* <Fab color="primary" aria-label="add" component={Link} to='/addevent'>
-        <AddIcon />
-      </Fab> */}
     </Box>
     <DataGrid
       rows={row}
       columns={columns}
       sx={{height:"700px",fontSize:18,border:"none",backgroundColor:"#fafafa",ml:5,mr:5}}
     />
-    {/* <Grid container justifyContent='end' alignItems='center' sx={{mt: 5, height: 60}}>
-      <Button 
-        style={{ color: "white", backgroundColor: "#f44336", width: "30%", height: "100%" }}
-        onClick={removeAllEvents}
-      >
-        一括削除
-      </Button>
-    </Grid> */}
   </>)
 }
 

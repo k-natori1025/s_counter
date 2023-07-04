@@ -5,9 +5,8 @@ import { API_HOST } from '../constants';
 import axios from 'axios';
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Fab from '@mui/material/Fab';
-import AddIcon from '@mui/icons-material/Add';
 import { Link } from 'react-router-dom';
+import AddEvent from '../pages/AddEvent';
 
 function EventsList(props){
     const columns = [
@@ -77,12 +76,7 @@ function EventsList(props){
   }
 
   return (<>
-    ログイン中の店舗のID:{props.store.id}
-    <Box sx={{ '& > :not(style)': { m: 1 } }}>
-      <Fab color="primary" aria-label="add" component={Link} to='/addevent'>
-        <AddIcon />
-      </Fab>
-    </Box>
+    <AddEvent store={props.store} events={events} setEvents={setEvents} />
     <DataGrid
       rows={row}
       columns={columns}

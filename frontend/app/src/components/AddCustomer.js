@@ -37,7 +37,6 @@ export default function AddCustomer(props) {
   
 
   return (<>
-    ログイン中の店舗ID:{props.store.id}
     <Container component="section" maxWidth="lg" sx={{ mt:1, mb:4 }}>
       <Box component="form" onSubmit={addCustomer} >
         <Grid container spacing={1}>
