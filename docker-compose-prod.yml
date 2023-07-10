@@ -1,10 +1,15 @@
 version: '3'
 services:
   api:
-    build: ./backend/
+    build: 
+      context: ./backend/
+      dockerfile: Dockerfile
     command: /bin/sh -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3001 -b '0.0.0.0'"
     volumes:
-      - ./backend:/api
+      - ./backend:/myapp
+      - public-data:/myapp/public
+      - tmp-data:/myapp/tmp
+      - log-data:/myapp/log
     ports:
       - 3001:3001
     depends_on:
@@ -22,9 +27,12 @@ services:
     ports:
       - "3306:3306"
   front:
-    build: ./frontend/
+    build: 
+      context: ./frontend/
+      dockerfile: Dockerfile
     volumes:
       - ./frontend/app:/front
+    command: sh -c "yarn start"
     ports:
       - 3000:3000
     environment:
@@ -33,6 +41,20 @@ services:
     stdin_open: true
     depends_on:
       - api
+  web:
+    build:
+      context: ./nginx
+    volumes:
+      - public-data:/web/public
+      - tmp-data:/web/tmp
+      - ./web/default.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - 80:80
+    depends_on:
+      - api
 
 volumes:
+  public-data:
+  tmp-data:
+  log-data:
   db-volume:
