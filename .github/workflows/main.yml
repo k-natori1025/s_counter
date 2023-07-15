@@ -85,7 +85,7 @@ jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-20.04 
-    needs: [front-test-build-image]
+    needs: [front-test-build-image, api-test-build-image]
 
     steps:
       - name: Checkout
