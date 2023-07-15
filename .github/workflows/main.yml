@@ -27,7 +27,7 @@ jobs:
 
       - name: Build an Image and Run Tests
         run: |
-          docker image build --target production -t temp_front_image_name:latest --build-env REACT_APP_API_HOST=/api/v1 .
+          docker image build --target production -t temp_front_image_name:latest .
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
