@@ -1,13 +1,15 @@
-import { useState } from 'react'
+import { React, useState, useEffect, memo } from 'react'
 import '../App.css'
 import SituationForUser from '../components/SituationForUser'
 import EventsListForUser from '../components/EventsListForUser'
 import { Box } from '@mui/material'
 import { useParams } from 'react-router-dom'
 
-const SaunaDetail = (props) => {
+
+function SaunaDetail(props) {
 
   const [active, setActive] = useState(1)
+  // const [store, setStore] = useState({})
 
   const activate = (id) => {
     console.log(id)
@@ -27,7 +29,8 @@ const SaunaDetail = (props) => {
   
   return(<>
     <Box sx={{
-        backgroundImage : `url(${store.image.url})`, 
+        backgroundImage: "url('/top2.jpeg')",
+        // backgroundImage : `url(${store.image.url})`, 
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
         height: 1100,
@@ -41,7 +44,6 @@ const SaunaDetail = (props) => {
           </li>
         ) ) }
       </ul>
-     
       { active === 1 && 
         <div className="tab__content">
           <SituationForUser store={store} />

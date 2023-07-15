@@ -26,6 +26,7 @@ function SituationForUser(props) {
   const rate = customers.length/props.store.number_of_lockers
 
   return (<>
+    現在確認中のサウナ施設：{props.store.store_name}
     <Container component="section" maxWidth="lg" sx={{mt:10, mb:10}} >
       <Grid container spacing={4}>
         { rate >= 0 && rate < 0.3 &&  

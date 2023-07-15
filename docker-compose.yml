@@ -2,11 +2,15 @@ version: '3'
 services:
   api:
     build: ./backend/
-    command: /bin/sh -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3001 -b '0.0.0.0'"
+    #command: /bin/sh -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3001 -b '0.0.0.0'"
     volumes:
       - ./backend:/api
     ports:
-      - 3001:3001
+      - 3001:3000
+    environment:
+      DB_USERNAME: root
+      DB_PASSWORD: password
+      DB_HOST: db
     depends_on:
       - db
     tty: true
@@ -26,7 +30,8 @@ services:
     volumes:
       - ./frontend/app:/front
     ports:
-      - 3000:3000
+      # - 3000:3000
+      - 3000:80
     environment:
       # - REACT_APP_API_SERVER=https://s_counter-api-1:3001/api/v1
       - CHOKIDAR_USEPOLLING=true

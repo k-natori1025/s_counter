@@ -10,7 +10,7 @@ import { CardMedia } from '@mui/material';
 
 const theme = createTheme();
 
-export default function Layout(props) {
+export default function LayoutForCustomers(props) {
 
   const navigate = useNavigate();
   const goBackToTop = () => {
@@ -23,7 +23,7 @@ export default function Layout(props) {
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="relative">
           <Toolbar>
-            <CardMedia component='img' image='logo_white.png' sx={{ width: 80, height: 80, cursor: "pointer" }} onClick={goBackToTop} />
+            <CardMedia component='img' image='/logo_white.png' sx={{ width: 80, height: 80, cursor: "pointer" }} onClick={goBackToTop} />
             <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
               サウナ混雑状況把握アプリ
             </Typography>
