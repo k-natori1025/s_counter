@@ -1,4 +1,4 @@
-# ビルド環境の指定(npm run testを追加→削除)
+# ビルド環境の指定
 FROM node:18-slim AS build
 WORKDIR /app
 RUN pwd
