@@ -68,7 +68,8 @@ Rails.application.configure do
   # cors設定
   config.middleware.insert_before 0, Rack::Cors do
     allow do
-      origins 'http://localhost:3000' 
+      origins "http://localhost:3000", "http://3.138.119.8"
+
       resource '*',
                headers: :any,
                methods: %i[get post put patch delete options head],
