@@ -71,7 +71,8 @@ Rails.application.configure do
       origins ENV['FRONTEND_DOMAIN'] || "frontloadbalancer-1581275200.us-east-2.elb.amazonaws.com"
       resource '*',
                headers: :any,
-               methods: %i[get post put patch delete options head],
+               methods: [:get, :post, :delete, :put, :patch, :options, :head],
+              #  methods: %i[get post put patch delete options head],
                credentials: true  
     end
   end
