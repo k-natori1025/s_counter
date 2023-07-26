@@ -16,14 +16,11 @@ RUN gem update --system ${RUBYGEMS_VERSION} && \
     bundle install
 
 COPY . /api
-RUN mkdir -p tmp/sockets
-RUN mkdir -p tmp/pids
-
-CMD ["rails", "server", "-b", "0.0.0.0"]
 
 # Add a script to be executed every time the container starts.
 VOLUME /api/tmp
 COPY entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
-EXPOSE 3000
+
+CMD /bin/bash -c "rm -f tmp/pids/server.pid && rails server -b 0.0.0.0"

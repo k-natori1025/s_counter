@@ -17,6 +17,8 @@ import SaunaDetail from './pages/SaunaDetail'
 import TopForCustomers from './pages/TopForCustomers'
 import LayoutForCustomers from './common/LayoutForCustomers'
 
+// import Status404 from './pages/errors/Status404'
+
 function App() {
   const [loggedInStatus, setLoggedInStatus] = useState("未ログイン")
   const [store, setStore] = useState({})
@@ -112,7 +114,8 @@ function App() {
             element={<AddEvent store={store} />} 
           />
            <Route 
-            exact path='/searchsauna' element={<SearchSauna/>} 
+            exact path='/searchsauna' 
+            element={<SearchSauna/>} 
           />
         </Route>
         <Route element={<LayoutForCustomers />}  >
@@ -121,12 +124,18 @@ function App() {
             element={<TopForCustomers />} 
           />
            <Route 
-            exact path='/searchsauna' element={<SearchSauna/>} 
+            exact path='/searchsauna' 
+            element={<SearchSauna/>} 
           />
           <Route  
             path="/saunadetail/:id" 
             element={<SaunaDetail stores={stores} />} 
           />
+          {/* <Route 
+            path="*" 
+            element={<Status404 />} 
+            status={404} 
+          /> */}
         </Route>
       </Routes>
     </div>

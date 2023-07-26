@@ -5,7 +5,6 @@ RUN pwd
 COPY package*.json ./
 RUN npm ci --quiet
 COPY . .
-ENV REACT_APP_API_HOST http://localhost:3001
 RUN npm run build
 
 # 本番用環境の指定

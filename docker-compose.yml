@@ -11,6 +11,7 @@ services:
       DB_USERNAME: root
       DB_PASSWORD: password
       DB_HOST: db
+      FRONTEND_DOMAIN: "http://localhost:3000"
     depends_on:
       - db
     tty: true
@@ -29,13 +30,14 @@ services:
   front:
     build: ./frontend/
     volumes:
-      - ./frontend/app:/front
+      # - ./frontend/app:/front
+      - ./frontend:/front
     ports:
       # - 3000:3000
       - 3000:80
     environment:
-      # - REACT_APP_API_SERVER=https://s_counter-api-1:3001/api/v1
-      - CHOKIDAR_USEPOLLING=true
+      REACT_APP_API_HOST: http://localhost:3001
+      CHOKIDAR_USEPOLLING: true
     tty: true
     stdin_open: true
     depends_on:
