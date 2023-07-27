@@ -10,7 +10,7 @@ env:
   ECS_FRONT_SERVICE: front-service
   ECS_API_SERVICE: api-service
   ECS_CLUSTER: s-counter-cluster
-  ECS_TASK_DEFINITION: .aws/task-definition.json
+  # ECS_TASK_DEFINITION: .aws/task-definition.json
 
 permissions:
   contents: read
@@ -108,7 +108,7 @@ jobs:
         id: render-front-task-def
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
-          task-definition: ${{ env.ECS_TASK_DEFINITION }}
+          # task-definition: ${{ env.ECS_TASK_DEFINITION }}
           container-name: front
           image: ${{ steps.login-ecr.outputs.registry }}/${{ secrets.AWS_ECR_FRONT_SERVER_REPOSITORY }}
 
@@ -116,7 +116,7 @@ jobs:
         id: render-api-task-def
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
-          task-definition: ${{ steps.render-front-task-def.outputs.task-definition }}
+          # task-definition: ${{ steps.render-front-task-def.outputs.task-definition }}
           container-name: api
           image: ${{ steps.login-ecr.outputs.registry }}/${{ secrets.AWS_ECR_API_SERVER_REPOSITORY }}
 
