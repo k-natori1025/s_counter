@@ -28,15 +28,15 @@ services:
     ports:
       - "3306:3306"
   front:
-    build: ./frontend/
+    build: 
+      context: ./frontend/
+      dockerfile: Dockerfile.dev
     volumes:
-      # - ./frontend/app:/front
-      - ./frontend:/front
+      - ./frontend:/app
     ports:
-      # - 3000:3000
-      - 3000:80
+      - 3000:3000
     environment:
-      REACT_APP_API_HOST: http://localhost:3001
+      # API_LOCAL_HOST: http://localhost:3001
       CHOKIDAR_USEPOLLING: true
     tty: true
     stdin_open: true

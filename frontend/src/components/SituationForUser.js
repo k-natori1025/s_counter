@@ -23,6 +23,8 @@ function SituationForUser(props) {
     })
   }, [])
 
+  console.log(props.store, "デバッグ")
+
   const rate = customers.length/props.store.number_of_lockers
 
   return (<>

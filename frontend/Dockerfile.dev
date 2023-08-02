@@ -1,0 +1,6 @@
+FROM node:18-slim
+WORKDIR /app
+ENV HOST=0.0.0.0
+COPY package*.json ./
+RUN npm ci --quiet
+COPY . .
