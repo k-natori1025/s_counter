@@ -68,7 +68,7 @@ Rails.application.configure do
   # cors設定
   config.middleware.insert_before 0, Rack::Cors do
     allow do
-      origins ENV['FRONTEND_DOMAIN'] || "http://frontloadbalancer-1581275200.us-east-2.elb.amazonaws.com"
+      origins "http://frontloadbalancer-1581275200.us-east-2.elb.amazonaws.com"
       resource '*',
                headers: :any,
                methods: [:get, :post, :delete, :put, :patch, :options, :head],
