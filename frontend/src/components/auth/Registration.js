@@ -12,7 +12,7 @@ function Registration(props) {
     console.log("イベント発火")
     event.preventDefault()
     // `${process.env.REACT_APP_API_SERVE}/registrations`
-    axios.post(`http://apiloadbalancer-1428013582.us-east-2.elb.amazonaws.com/api/v1/registrations`, 
+    axios.post("http://apiloadbalancer-1428013582.us-east-2.elb.amazonaws.com/api/v1/registrations", 
       {
         user: {
             email: email, 
