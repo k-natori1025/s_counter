@@ -32,7 +32,7 @@ function Top() {
               <Typography sx={{ fontSize: 15, mb: 4 }} color="white" textAlign="center" >
                 店舗ログインはこちらから<br/>
                 <Button variant="contained" sx={{ width: 300}} component={Link} to="/loginforstore">
-                  Login
+                  ログイン
                 </Button>
               </Typography>
             </Grid>
