@@ -1,1 +1,1 @@
-export const API_HOST = process.env.REACT_APP_API_HOST || "http://localhost:3001"
+export const API_HOST = process.env.REACT_APP_API_HOST || "http://apiloadbalancer-1428013582.us-east-2.elb.amazonaws.com"
