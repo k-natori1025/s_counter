@@ -69,7 +69,7 @@ Rails.application.configure do
   # cors設定
   config.middleware.insert_before 0, Rack::Cors do
     allow do
-      origins "http://s-counter-app.com"
+      origins "https://s-counter-app.com"
       resource '*',
                headers: :any,
                methods: [:get, :post, :delete, :put, :patch, :options, :head],
