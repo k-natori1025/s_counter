@@ -7,7 +7,7 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins ["http://frontloadbalancer-1581275200.us-east-2.elb.amazonaws.com", "http://localhost:3000"]
+    origins ["http://s-counter-app.com", "http://localhost:3000"]
 
     resource "*",
       headers: :any,
