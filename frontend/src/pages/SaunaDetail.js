@@ -1,4 +1,4 @@
-import { React, useState, useEffect, memo } from 'react'
+import { React, useState } from 'react'
 import '../App.css'
 import SituationForUser from '../components/SituationForUser'
 import EventsListForUser from '../components/EventsListForUser'
@@ -46,12 +46,16 @@ function SaunaDetail(props) {
       </ul>
       { active === 1 && 
         <div className="tab__content">
-          <SituationForUser store={store} />
+          {store && 
+            <SituationForUser store={store} />
+          }
         </div>
       } 
       { active === 2 && 
         <div className="tab__content">
-          <EventsListForUser store={store} />
+          {store && 
+            <EventsListForUser store={store} />
+          }
         </div>
       }
       

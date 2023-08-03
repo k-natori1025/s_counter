@@ -25,7 +25,7 @@ function Top() {
             </Grid>
             <Grid item xs={12} >
               <Typography sx={{ fontSize: 25, fontWeight: "bold", mb: 4 }} color="white" textAlign="center">
-                サウナカウンターはサウナ施設の混雑状況を把握するアプリです
+                サウナーカウンターはサウナ施設の混雑状況を把握するアプリです
               </Typography>
             </Grid>
             <Grid item xs={12} >

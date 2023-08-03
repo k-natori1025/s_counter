@@ -6,7 +6,7 @@ import axios from 'axios';
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import { Link } from 'react-router-dom';
-import AddEvent from '../pages/AddEvent';
+import AddEvent from './AddEvent';
 
 function EventsList(props){
     const columns = [

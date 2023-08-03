@@ -10,7 +10,7 @@ const usageTimes = [ '60', '90', '120'];
 
 export default function AddCustomer(props) {
 
-  const [ lockerNumber, setLockerNumber ] = useState(null)
+  const [ lockerNumber, setLockerNumber ] = useState("")
   const [ usageTime, setUsageTime ] = useState(null)
 
   const addCustomer = (e) => {
@@ -27,7 +27,7 @@ export default function AddCustomer(props) {
       console.log('registration response', resp)
       const newCustomer = resp.data.customer
       props.setCustomers([...props.customers, newCustomer])
-      setLockerNumber(null)
+      setLockerNumber("")
       setUsageTime(null)
       })
     .catch(e => {
@@ -46,10 +46,8 @@ export default function AddCustomer(props) {
               noValidate
               autoComplete="off"
               textAlign="center"
-              value={lockerNumber}
-              onChange={(e) => setLockerNumber(e.target.value)}
             >
-            <TextField id="outlined-basic" label="ロッカー番号" variant="outlined" />
+            <TextField id="outlined-basic" label="ロッカー番号" variant="outlined" value={lockerNumber} onChange={(e) => setLockerNumber(e.target.value)} />
             </Box>
           </Grid>
           <Grid item xs={12} sm={6} md={4} >

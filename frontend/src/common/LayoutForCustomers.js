@@ -6,7 +6,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Outlet, useNavigate } from 'react-router-dom'
-import { CardMedia } from '@mui/material';
+import { CardMedia, Button } from '@mui/material';
 
 const theme = createTheme();
 
@@ -14,7 +14,10 @@ export default function LayoutForCustomers(props) {
 
   const navigate = useNavigate();
   const goBackToTop = () => {
-    navigate('/topforcustomers')
+    navigate('/')
+  }
+  const goBackToSearch = () => {
+    navigate('searchsauna')
   }
 
   return (<>
@@ -27,6 +30,7 @@ export default function LayoutForCustomers(props) {
             <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
               サウナ混雑状況把握アプリ
             </Typography>
+            <Button variant="contained" style={{ backgroundColor: "#673ab7", marginLeft: "15px"}} onClick={goBackToSearch}>検索ページに戻る</Button>
           </Toolbar>
         </AppBar>
       </Box>

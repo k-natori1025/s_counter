@@ -9,7 +9,7 @@ import Dashboard from './pages/Dashboard';
 import Layout from './common/Layout';
 import BasicTabs from './pages/BasicTabs'
 import axios from 'axios';
-import AddEvent from './pages/AddEvent';
+import AddEvent from './components/AddEvent';
 import SignUpForStore from './components/auth/SignUpForStore';
 import LoginForStore from './components/auth/LoginForStore';
 import SearchSauna from './pages/SearchSauna';
@@ -112,10 +112,6 @@ function App() {
           <Route 
             exact path="/addevent" 
             element={<AddEvent store={store} />} 
-          />
-           <Route 
-            exact path='/searchsauna' 
-            element={<SearchSauna/>} 
           />
         </Route>
         <Route element={<LayoutForCustomers />}  >

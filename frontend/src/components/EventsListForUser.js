@@ -5,9 +5,6 @@ import { API_HOST } from '../constants';
 import axios from 'axios';
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Fab from '@mui/material/Fab';
-import AddIcon from '@mui/icons-material/Add';
-import { Link } from 'react-router-dom';
 
 function EventsListForUser(props){
     const columns = [
@@ -45,44 +42,13 @@ function EventsListForUser(props){
     } )
   )
 
-  const removeEvent = (id, e) => {
-    const sure = window.confirm('Are you sure?')
-    if(sure) {
-      axios.delete(`${API_HOST}/api/v1/events/${id}`,
-        {params: {store_id: window.sessionStorage.getItem(['store_id']) }}
-      )
-      .then( resp => {
-        console.log('削除しました')
-        const newList = JSON.parse(JSON.stringify(resp.data))
-        console.log(newList)
-        setEvents(newList)
-      })
-      .catch( e => {
-        console.log(e)
-      })
-    }
-  }
-
-  const removeAllEvents = () => {
-    const sure = window.confirm('Are you sure?')
-    if(sure) {
-      axios.delete(`${API_HOST}/api/v1/events/destroy_all`)
-      .then( resp => {
-        setEvents([])
-      })
-      .catch( e => {
-        console.log(e)
-      })
-    }
-  }
-
   return (<>
     <Box sx={{ '& > :not(style)': { m: 1 } }}>
     </Box>
     <DataGrid
       rows={row}
       columns={columns}
-      sx={{height:"700px",fontSize:18,border:"none",backgroundColor:"#fafafa",ml:5,mr:5}}
+      sx={{height:"700px",fontSize:18,border:"none",backgroundColor:"#fafafa",m:5}}
     />
   </>)
 }

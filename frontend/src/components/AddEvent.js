@@ -7,10 +7,10 @@ import { useState } from 'react';
 import { Grid, Button, Container } from '@mui/material';
 
 export default function AddEvent(props) {
-  const [ eventName, setEventName ] = useState(null)
-  const [ time, setTime ] = useState(null)
-  const [ person, setPerson ] = useState(null)
-  const [ heat, setHeat ] = useState(null)
+  const [ eventName, setEventName ] = useState("")
+  const [ time, setTime ] = useState("")
+  const [ person, setPerson ] = useState("")
+  const [ heat, setHeat ] = useState("")
 
   const addEvent = (e) => {
     e.preventDefault()
@@ -49,10 +49,8 @@ export default function AddEvent(props) {
               noValidate
               autoComplete="off"
               textAlign="center"
-              value={time}
-              onChange={ e => setTime(e.target.value)}
             >
-            <TextField id="outlined-basic" label="開始時間" variant="outlined" />
+            <TextField id="outlined-basic" label="開始時間" variant="outlined" value={time} onChange={ e => setTime(e.target.value)} />
             </Box>
           </Grid>
           <Grid item xs={12}sm={6} md={3} >
@@ -62,10 +60,8 @@ export default function AddEvent(props) {
               noValidate
               autoComplete="off"
               textAlign="center"
-              value={eventName}
-              onChange={ e => setEventName(e.target.value)}
             >
-            <TextField id="outlined-basic" label="イベント名" variant="outlined" />
+            <TextField id="outlined-basic" label="イベント名" variant="outlined" value={eventName} onChange={ e => setEventName(e.target.value)} />
             </Box>
           </Grid>
           <Grid item xs={12} sm={6} md={3} >
@@ -75,10 +71,8 @@ export default function AddEvent(props) {
               noValidate
               autoComplete="off"
               textAlign="center"
-              value={person}
-              onChange={ e => setPerson(e.target.value)}
             >
-            <TextField id="outlined-basic" label="担当者" variant="outlined" />
+            <TextField id="outlined-basic" label="担当者" variant="outlined" value={person} onChange={ e => setPerson(e.target.value)} />
             </Box>
           </Grid>
           <Grid item xs={12} sm={6} md={3} >
@@ -88,10 +82,8 @@ export default function AddEvent(props) {
               noValidate
               autoComplete="off"
               textAlign="center"
-              value={heat}
-              onChange={ e => setHeat(e.target.value)}
             >
-            <TextField id="outlined-basic" label="熱さ" variant="outlined" />
+            <TextField id="outlined-basic" label="熱さ" variant="outlined" value={heat} onChange={ e => setHeat(e.target.value)} />
             </Box>
           </Grid>
         </Grid>
