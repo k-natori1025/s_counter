@@ -15,13 +15,19 @@ class Api::V1::StoresController < ApplicationController
     end
   end
 
-  def show 
+  def update
+    @store = Store.find(params[:id])
+    if @store.update(store_params)
+      render json: { status: :updated, store: @store }
+    else
+      render json: store.errors, status:422
+    end
   end
 
   private
 
     def store_params
-      params.require(:store).permit(:store_name, :phone_number, :password, :password_confirmation, :number_of_lockers, :image, :description)
+      params.require(:store).permit(:store_name, :phone_number, :email, :password, :password_confirmation, :address, :capacity, :number_of_lockers, :image, :description)
     end
 
 end

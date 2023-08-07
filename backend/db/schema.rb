@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_29_105342) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_06_110218) do
   create_table "customers", charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.integer "usage_time"
     t.datetime "created_at", null: false
@@ -43,6 +43,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_29_105342) do
     t.string "password"
     t.string "password_digest"
     t.text "description"
+    t.string "email"
+    t.string "capacity"
   end
 
   create_table "users", charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|

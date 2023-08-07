@@ -4,10 +4,8 @@ import './App.css';
 import { API_HOST } from './constants';
 import Top from './pages/Top'
 import SignUp from './components/auth/SignUp'
-import Login from './components/auth/Login';
 import Dashboard from './pages/Dashboard';
 import Layout from './common/Layout';
-import BasicTabs from './pages/BasicTabs'
 import axios from 'axios';
 import AddEvent from './components/AddEvent';
 import SignUpForStore from './components/auth/SignUpForStore';
@@ -16,7 +14,8 @@ import SearchSauna from './pages/SearchSauna';
 import SaunaDetail from './pages/SaunaDetail'
 import TopForCustomers from './pages/TopForCustomers'
 import LayoutForCustomers from './common/LayoutForCustomers'
-
+import LayoutForUser from './common/LayoutForUser';
+import EditStore from './pages/EditStore';
 // import Status404 from './pages/errors/Status404'
 
 function App() {
@@ -94,10 +93,6 @@ function App() {
             element={<SignUp handleLogin={handleLogin} loggedInStatus={loggedInStatus} />} 
           />
           <Route 
-            exact path="/login" 
-            element={<Login handleLogin={handleLogin} loggedInStatus={loggedInStatus} />} 
-          />
-          <Route 
             exact path="/signupforstore" 
             element={<SignUpForStore handleLogin={handleLogin} loggedInStatus={loggedInStatus} />} 
           />
@@ -113,16 +108,12 @@ function App() {
             exact path="/addevent" 
             element={<AddEvent store={store} />} 
           />
-        </Route>
-        <Route element={<LayoutForCustomers />}  >
           <Route 
-            exact path="/topforcustomers" 
-            element={<TopForCustomers />} 
+            exact path="/editstore" 
+            element={<EditStore store={store} />} 
           />
-           <Route 
-            exact path='/searchsauna' 
-            element={<SearchSauna/>} 
-          />
+        </Route>
+        <Route element={<LayoutForCustomers />} >
           <Route  
             path="/saunadetail/:id" 
             element={<SaunaDetail stores={stores} />} 
@@ -132,6 +123,17 @@ function App() {
             element={<Status404 />} 
             status={404} 
           /> */}
+        </Route>
+        <Route element={<LayoutForUser />}  >
+          <Route 
+            exact path='/searchsauna' 
+            element={<SearchSauna/>} 
+          />
+          <Route 
+            exact path="/topforcustomers" 
+            element={<TopForCustomers />} 
+          />
+          
         </Route>
       </Routes>
     </div>

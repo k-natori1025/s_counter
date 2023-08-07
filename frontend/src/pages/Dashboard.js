@@ -4,6 +4,7 @@ import Situation from '../components/Situation'
 import CustomersList from '../components/CustomersList'
 import EventsList from '../components/EventsList'
 import { Box } from '@mui/material'
+import AboutStore from '../components/AboutStore'
 
 const Dashboard = (props) => {
 
@@ -17,7 +18,9 @@ const Dashboard = (props) => {
   const items = [
     {id: 1, title: "入退室管理", path: "dashboard/customers"},
     {id: 2, title: "混雑状況", path: "dashboard/situations"},  
-    {id: 3, title: "イベント情報", path: "dashboard/events"}
+    {id: 3, title: "イベント情報", path: "dashboard/events"},
+    {id: 4, title: "店舗情報", path: "dashboard/aboutstore"},
+    {id: 5, title: "お知らせ投稿", path: "dashboard/aboutstore"}
   ]
 
   return(<>
@@ -50,6 +53,16 @@ const Dashboard = (props) => {
       { active === 3 && 
         <div className="tab__content">
           <EventsList store={props.store} />
+        </div>
+      }
+      { active === 4 && 
+        <div className="tab__content">
+          <AboutStore store={props.store} />
+        </div>
+      }
+      { active === 5 && 
+        <div className="tab__content">
+          <AboutStore store={props.store} />
         </div>
       }
       

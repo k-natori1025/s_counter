@@ -1,40 +1,36 @@
-import * as React from 'react';
+import React from 'react'
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react'
-import { API_HOST } from '../../constants';
+import { API_HOST } from '../constants';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 
 const defaultTheme = createTheme();
 
-export default function SignUpForStore(props) {
- 
-  const [storeName, setStoreName] = useState("")
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [passwordConfirmation, setPasswordConfirmation] = useState("")
-  const [phoneNumber, setPhoneNumber] = useState("")
-  const [address, setAddress] = useState("")
-  const [capacity, setCapacity] = useState("")
-  const [numberOfLockers, setNumberOfLockers] = useState("") 
-  const [image, setImage] = useState("")
-  const [ description, setDescription ] = useState("")
+function EditStore(props) {
 
-  const [preview, setPreview] = useState("")
+  const [storeName, setStoreName] = useState(props.store.store_name)
+  const [email, setEmail] = useState(props.store.email)
+  const [phoneNumber, setPhoneNumber] = useState(props.store.phone_number)
+  const [address, setAddress] = useState(props.store.address)
+  const [capacity, setCapacity] = useState(props.store.capacity)
+  const [numberOfLockers, setNumberOfLockers] = useState(props.store.number_of_lockers) 
+  const [image, setImage] = useState("")
+  const [ description, setDescription ] = useState(props.store.description)
+
+  const [preview, setPreview] = useState(props.store.image.url)
   const navigate = useNavigate()
 
-  const handleSuccessfulAuthentication = (data) => {
-    props.handleLogin(data)
+  const goBackToDashboard = () => {
     navigate("/dashboard")
   }
 
@@ -49,15 +45,15 @@ export default function SignUpForStore(props) {
       }
     }
 
-    axios.post(`${API_HOST}/api/v1/stores`, data, config,
+    axios.patch(`${API_HOST}/api/v1/stores/${props.store.id}`, data, config,
       { withCredentials: true }
     ).then(resp=> {
-        console.log('registration response', resp)
-        if(resp.data.status === 'created') {
-            handleSuccessfulAuthentication(resp.data)
+        console.log('update response', resp)
+        if(resp.data.status === 'updated') {
+            navigate('/dashboard')
         }
     }).catch(error=> {
-        console.log("registration error", error)
+        console.log("update error", error)
     })
     event.preventDefault()
   }
@@ -75,8 +71,6 @@ export default function SignUpForStore(props) {
     const formData = new FormData()    
     formData.append('store[store_name]', storeName)
     formData.append('store[email]', email)
-    formData.append('store[password]', password)
-    formData.append('store[password_confirmation]', passwordConfirmation)
     formData.append('store[phone_number]', phoneNumber)
     formData.append('store[address]', address)   
     formData.append('store[number_of_lockers]', numberOfLockers) 
@@ -89,7 +83,7 @@ export default function SignUpForStore(props) {
 
   return (<>
     <ThemeProvider theme={defaultTheme}>
-      <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth="xs" sx={{mb:10}}>
         <CssBaseline />
         <Box
           sx={{
@@ -99,11 +93,11 @@ export default function SignUpForStore(props) {
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
+          <Avatar sx={{ m: 1, bgcolor: '#00e676' }}>
+            <EditOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            店舗情報登録
+            店舗情報編集
           </Typography>
           <Box component="form" onSubmit={handleSubmit} encType='multipart/form_data' sx={{ mt: 3 }}>
             <Grid container spacing={2}>
@@ -133,34 +127,6 @@ export default function SignUpForStore(props) {
                   autoComplete="off"
                   value={email}
                   onChange={event => setEmail(event.target.value)}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                パスワード:<br/>
-                <TextField
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
-                  value={password}
-                  onChange={event => setPassword(event.target.value)}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                パスワード（確認）:<br/>
-                <TextField
-                  required
-                  fullWidth
-                  name="passwordConfirmation"
-                  label="Password Confirmation"
-                  type="password"
-                  id="passwordConfirmation"
-                  autoComplete="new-password"
-                  value={passwordConfirmation}
-                  onChange={event => setPasswordConfirmation(event.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -214,7 +180,7 @@ export default function SignUpForStore(props) {
                 />
               </Grid>
               <Grid item xs={12}>
-                <p>お店のイメージ画像を選んでください</p>
+                <p>新しいお店のイメージ画像を選んでください</p>
                 <input type="file" name="file" accept="image/*" onChange={onFileInputChange} /><br/>
                 {preview?
                   <img src={preview} alt="preview" style={{width: "150px", height: "100px"}} />
@@ -240,18 +206,20 @@ export default function SignUpForStore(props) {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              お店を登録
+              編集内容を登録する
             </Button>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link href="/loginforstore" variant="body2">
-                  Already have an account? Log in
-                </Link>
-              </Grid>
-            </Grid>
+            <Button 
+            style={{ color: "white", backgroundColor: "#f44336", width: "100%", height: "100%" }}
+            onClick={goBackToDashboard}
+          >
+            キャンセル
+          </Button>
           </Box>
         </Box>
       </Container>
     </ThemeProvider>
-  </>);
+
+  </>)
 }
+
+export default EditStore

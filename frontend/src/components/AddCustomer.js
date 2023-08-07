@@ -6,7 +6,7 @@ import { API_HOST } from '../constants';
 import axios from 'axios'
 import { useState } from 'react';
 
-const usageTimes = [ '60', '90', '120'];
+const usageTimes = [ '60', '90', '120', '180'];
 
 export default function AddCustomer(props) {
 

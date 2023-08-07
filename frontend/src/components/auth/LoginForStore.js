@@ -16,7 +16,7 @@ import { useState } from 'react'
 import { API_HOST } from '../../constants';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
-
+import CustomizedSnackbars from '../message/CustomizedSnackbars';
 
 const defaultTheme = createTheme();
 
@@ -24,8 +24,20 @@ export default function LoginForStore(props) {
 
   const [phoneNumber, setPhoneNumber] = useState("")
   const [password, setPassword] = useState("")
-  const navigate = useNavigate()
+  const [status, setStatus] = useState({
+    open: false,
+    type: "success",
+    message: "ログインに成功しました"
+  })
 
+  const handleClose = (event, reason) => {
+    if(reason==='clickaway'){
+      return;
+    }
+    setStatus({...status, open: false})
+  }
+
+  const navigate = useNavigate()
 
   const handleSuccessfulAuthentication = (data) => {
     props.handleLogin(data)
@@ -48,9 +60,21 @@ export default function LoginForStore(props) {
         console.log('login response', resp)
         if(resp.data.logged_in) {
             handleSuccessfulAuthentication(resp.data)
+            // ログイン成功メッセージの表示
+            setStatus({
+              open: true,
+              tyep: "success",
+              message: "ログインに成功しました"
+            })
         }
     }).catch(error=> {
         console.log("registration error", error)
+        // ログイン失敗メッセージの表示
+        setStatus({
+          open: true,
+          tyep: "error",
+          message: `ログインに失敗しました（コード:${error.response.status}）`
+        })
     })
     event.preventDefault()
   }
@@ -59,6 +83,13 @@ export default function LoginForStore(props) {
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
+        {/* フラッシュメッセージ */}
+        <CustomizedSnackbars
+          open={status.open}
+          handleClose={handleClose}
+          type={status.type}
+          message={status.message}
+        />
         <Box
           sx={{
             marginTop: 8,
