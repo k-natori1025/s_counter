@@ -16,6 +16,7 @@ import TopForCustomers from './pages/TopForCustomers'
 import LayoutForCustomers from './common/LayoutForCustomers'
 import LayoutForUser from './common/LayoutForUser';
 import EditStore from './pages/EditStore';
+import PostsList from './components/PostsList';
 // import Status404 from './pages/errors/Status404'
 
 function App() {
@@ -111,6 +112,10 @@ function App() {
           <Route 
             exact path="/editstore" 
             element={<EditStore store={store} />} 
+          />
+          <Route 
+            exact path="/postslist" 
+            element={<PostsList store={store} />} 
           />
         </Route>
         <Route element={<LayoutForCustomers />} >

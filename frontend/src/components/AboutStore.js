@@ -13,7 +13,7 @@ function AboutStore(props) {
   return (<>
     
     <Container component="section" maxWidth="lg" >
-      <Grid container backgroundColor="white" spacing={2}  sx={{mt: 5, mb: 5}}>
+      <Grid container backgroundColor="white" spacing={2}  sx={{mt: 5, mb: 5, borderRadius: 2}}>
         <Grid item sm={4} sx={{mt: 5}}>
           <CardMedia
             component="img"

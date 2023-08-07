@@ -13,10 +13,14 @@ Rails.application.routes.draw do
       post '/login', to: 'sessions#login'
       get '/logged_in', to: 'sessions#logged_in?'
       delete '/logout', to: 'sessions#logout'
-      delete '/customers/destroy_all', to: 'customers#destroy_all'
+
       resources :customers, only: %i[create index destroy]
-      delete '/events/destroy_all', to: 'events#destroy_all'
+      delete '/customers/destroy_all', to: 'customers#destroy_all'
+
       resources :events, only: %i[create index destroy]
+      delete '/events/destroy_all', to: 'events#destroy_all'
+
+      resources :posts, only: %i[create index destroy]
     end
   end
 end

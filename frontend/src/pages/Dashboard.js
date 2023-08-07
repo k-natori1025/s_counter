@@ -5,6 +5,7 @@ import CustomersList from '../components/CustomersList'
 import EventsList from '../components/EventsList'
 import { Box } from '@mui/material'
 import AboutStore from '../components/AboutStore'
+import PostsList from '../components/PostsList'
 
 const Dashboard = (props) => {
 
@@ -62,7 +63,7 @@ const Dashboard = (props) => {
       }
       { active === 5 && 
         <div className="tab__content">
-          <AboutStore store={props.store} />
+          <PostsList store={props.store} />
         </div>
       }
       

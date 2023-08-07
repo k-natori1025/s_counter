@@ -42,6 +42,7 @@ function CustomersList(props){
     })
   }, [])
 
+  // 現時刻を計算
   const calcExitTime = (created_at, usage_time) => {
     const date = new Date(created_at);
     const minutesToAdd = usage_time;
