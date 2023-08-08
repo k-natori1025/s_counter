@@ -27,10 +27,11 @@ const Dashboard = (props) => {
   return(<>
     <Box sx={{
         backgroundImage: "url('top2.jpeg')", 
-        backgroundRepeat: "no-repeat",
+        // backgroundRepeat: "repeat",
         backgroundSize: "cover",
-        height: 1100,
-        opacity: 0.8
+        height: "100%",
+        opacity: 0.8,
+        pb: 50
       }}>
       <section className="tab">
       <ul className="tab__label">

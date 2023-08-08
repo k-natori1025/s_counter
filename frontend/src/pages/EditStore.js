@@ -9,26 +9,64 @@ import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { API_HOST } from '../constants';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 
 const defaultTheme = createTheme();
 
-function EditStore(props) {
+function EditStore() {
 
-  const [storeName, setStoreName] = useState(props.store.store_name)
-  const [email, setEmail] = useState(props.store.email)
-  const [phoneNumber, setPhoneNumber] = useState(props.store.phone_number)
-  const [address, setAddress] = useState(props.store.address)
-  const [capacity, setCapacity] = useState(props.store.capacity)
-  const [numberOfLockers, setNumberOfLockers] = useState(props.store.number_of_lockers) 
+  const [stores, setStores] = useState([])
+  const [store, setStore] = useState({})
+  const [storeName, setStoreName] = useState()
+  const [email, setEmail] = useState()
+  const [phoneNumber, setPhoneNumber] = useState()
+  const [address, setAddress] = useState()
+  const [capacity, setCapacity] = useState()
+  const [numberOfLockers, setNumberOfLockers] = useState() 
   const [image, setImage] = useState("")
-  const [ description, setDescription ] = useState(props.store.description)
+  const [ description, setDescription ] = useState()
 
-  const [preview, setPreview] = useState(props.store.image.url)
+  const [preview, setPreview] = useState()
   const navigate = useNavigate()
+
+  const checkLoginStatus = () => {
+    axios.get(`${API_HOST}/api/v1/logged_in`, 
+      { withCredentials: true }
+    ) 
+      .then(resp => {
+        if(resp.data.logged_in) {
+          console.log("ログインステータスをチェックしました")
+          console.log(resp.data)
+          setStore(resp.data.store)
+          setStoreName(resp.data.store.store_name)
+          setEmail(resp.data.store.email)
+          setPhoneNumber(resp.data.store.phone_number)
+          setAddress(resp.data.store.address)
+          setCapacity(resp.data.store.capacity)
+          setNumberOfLockers(resp.data.store.number_of_lockers)
+          setImage(resp.data.store.image)
+          setDescription(resp.data.store.description)
+        } 
+    }).catch(error => {
+        console.log("ログインエラーです", error)
+    })
+  }
+
+  useEffect(() => {
+    checkLoginStatus()
+  }, [])
+
+  useEffect(()=> {
+    axios.get(`${API_HOST}/api/v1/stores`)
+    .then( resp => {
+      const newList = JSON.parse(JSON.stringify(resp.data))
+      console.log(newList)
+      setStores(newList)
+    })
+  }, [])
 
   const goBackToDashboard = () => {
     navigate("/dashboard")
@@ -45,7 +83,7 @@ function EditStore(props) {
       }
     }
 
-    axios.patch(`${API_HOST}/api/v1/stores/${props.store.id}`, data, config,
+    axios.patch(`${API_HOST}/api/v1/stores/${store.id}`, data, config,
       { withCredentials: true }
     ).then(resp=> {
         console.log('update response', resp)
@@ -109,7 +147,6 @@ function EditStore(props) {
                   required
                   fullWidth
                   id="name"
-                  label="Name"
                   autoFocus
                   value={storeName}
                   onChange={event => setStoreName(event.target.value)}
@@ -122,7 +159,6 @@ function EditStore(props) {
                   required
                   fullWidth
                   id="email"
-                  label="Email"
                   name="email"
                   autoComplete="off"
                   value={email}
@@ -134,7 +170,6 @@ function EditStore(props) {
                 <TextField
                   fullWidth
                   id="phoneNumber"
-                  label="Phone Number"
                   name="phoneNumber"
                   autoComplete="off"
                   value={phoneNumber}
@@ -147,7 +182,6 @@ function EditStore(props) {
                   required
                   fullWidth
                   id="address"
-                  label="Address"
                   name="address"
                   autoComplete="off"
                   value={address}
@@ -159,7 +193,6 @@ function EditStore(props) {
                 <TextField
                   fullWidth
                   name="numberofLockers"
-                  label="Number of Lockers"
                   id="numberOfLockers"
                   autoComplete="off"
                   value={numberOfLockers}
@@ -172,7 +205,6 @@ function EditStore(props) {
                   required
                   fullWidth
                   name="capacity"
-                  label="Capacity"
                   id="capacity"
                   autoComplete="off"
                   value={capacity}
@@ -194,7 +226,6 @@ function EditStore(props) {
                     fullWidth
                     rows={4}
                     name="description"
-                    label="description"
                     value={description}
                     onChange={ event => setDescription(event.target.value)} />
                 </Box>

@@ -17,6 +17,7 @@ import { API_HOST } from '../../constants';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 import CustomizedSnackbars from '../message/CustomizedSnackbars';
+import { useSnackbar } from '../../hooks/useSnackbar';
 
 const defaultTheme = createTheme();
 
@@ -37,6 +38,8 @@ export default function LoginForStore(props) {
     setStatus({...status, open: false})
   }
 
+  const { addSnack } = useSnackbar();
+
   const navigate = useNavigate()
 
   const handleSuccessfulAuthentication = (data) => {
@@ -47,6 +50,7 @@ export default function LoginForStore(props) {
   const handleSubmit = (event) => {
     console.log("イベント発火")
     event.preventDefault()
+    addSnack({ type: "success", message: "Snackbar" });
     
     axios.post(`${API_HOST}/api/v1/login`, 
       {
@@ -61,20 +65,12 @@ export default function LoginForStore(props) {
         if(resp.data.logged_in) {
             handleSuccessfulAuthentication(resp.data)
             // ログイン成功メッセージの表示
-            setStatus({
-              open: true,
-              tyep: "success",
-              message: "ログインに成功しました"
-            })
+            addSnack({ type: "success", message: "成功しました" });
         }
     }).catch(error=> {
         console.log("registration error", error)
         // ログイン失敗メッセージの表示
-        setStatus({
-          open: true,
-          tyep: "error",
-          message: `ログインに失敗しました（コード:${error.response.status}）`
-        })
+        
     })
     event.preventDefault()
   }

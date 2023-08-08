@@ -11,7 +11,7 @@ function AboutStore(props) {
   }
 
   return (<>
-    
+    { props.store && 
     <Container component="section" maxWidth="lg" >
       <Grid container backgroundColor="white" spacing={2}  sx={{mt: 5, mb: 5, borderRadius: 2}}>
         <Grid item sm={4} sx={{mt: 5}}>
@@ -56,7 +56,7 @@ function AboutStore(props) {
       </Grid>
 
     </Container>
-    
+    }
   
   </>)
 }

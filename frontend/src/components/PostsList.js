@@ -8,7 +8,6 @@ import AddPost from './AddPost'
 function PostsList(props) {
 
   const [posts, setPosts] = useState([])
-  console.log("postsです", posts)
   
   useEffect(()=> {
     axios.get(`${API_HOST}/api/v1/posts`,
@@ -27,19 +26,19 @@ function PostsList(props) {
   return (<>
     <AddPost store={props.store} posts={posts} setPosts={setPosts} />
     
-    <Container component="section" maxWidth="lg" sx={{backgroundColor: "white", mt: 2}} >
+    <Container component="section" maxWidth="lg" >
       <Grid container >
-        { posts.map((post, index)=> {
-          <Grid item key={index} sm={12}>
-            <Card sx={{ height: 300 }}>
+        { posts.map((post, index)=> (
+          <Grid item key={index} sm={12} sx={{backgroundColor: "white", mt: 2, borderRadius: 2}} >
+            <Card sx={{ height: "100%", p: 3 }}>
               <CardContent>
                 <Typography sx={{ fontSize: '16px'}}>
-                  あああ{ post.content}
+                  { post.content}
                 </Typography>
               </CardContent>
             </Card>
           </Grid>
-        })}
+        ))}
       </Grid>
     </Container>
 

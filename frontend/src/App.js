@@ -17,6 +17,7 @@ import LayoutForCustomers from './common/LayoutForCustomers'
 import LayoutForUser from './common/LayoutForUser';
 import EditStore from './pages/EditStore';
 import PostsList from './components/PostsList';
+import { SnackbarProvider } from './SnackbarProvider';
 // import Status404 from './pages/errors/Status404'
 
 function App() {
@@ -83,6 +84,7 @@ function App() {
 
   return (
     <div>
+      <SnackbarProvider>
       <Routes>
         <Route element={<Layout loggedInStatus={loggedInStatus} handleLogoutClick={handleLogoutClick} />}  >
           <Route 
@@ -111,7 +113,7 @@ function App() {
           />
           <Route 
             exact path="/editstore" 
-            element={<EditStore store={store} />} 
+            element={<EditStore />} 
           />
           <Route 
             exact path="/postslist" 
@@ -141,6 +143,7 @@ function App() {
           
         </Route>
       </Routes>
+      </SnackbarProvider>
     </div>
   )
 }

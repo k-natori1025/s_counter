@@ -24,6 +24,11 @@ class Api::V1::StoresController < ApplicationController
     end
   end
 
+  def show 
+    @store = Store.find(params[:id])
+    render json: { store: @store }
+  end
+
   private
 
     def store_params
