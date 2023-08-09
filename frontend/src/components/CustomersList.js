@@ -16,6 +16,7 @@ function CustomersList(props){
     },
   ];
 
+  // 時刻を見やすく変更
   const handleToDate=(date)=>{
     date = new Date(date);
     if(date.getMinutes() < 10){
@@ -42,7 +43,7 @@ function CustomersList(props){
     })
   }, [])
 
-  // 現時刻を計算
+  // 退室時間を計算
   const calcExitTime = (created_at, usage_time) => {
     const date = new Date(created_at);
     const minutesToAdd = usage_time;

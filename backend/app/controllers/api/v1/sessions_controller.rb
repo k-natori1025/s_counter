@@ -1,7 +1,7 @@
 class Api::V1::SessionsController < ApplicationController
 
   def login
-    store = Store.find_by(phone_number: session_params[:phone_number])
+    store = Store.find_by(email: session_params[:email])
 
     if store && store.authenticate(session_params[:password])
       # log_in store
@@ -27,7 +27,7 @@ class Api::V1::SessionsController < ApplicationController
 
   private
     def session_params
-      params.require(:store).permit(:phone_number, :password)
+      params.require(:store).permit(:email, :password)
     end
 
 end

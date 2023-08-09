@@ -23,8 +23,9 @@ const defaultTheme = createTheme();
 
 export default function LoginForStore(props) {
 
-  const [phoneNumber, setPhoneNumber] = useState("")
+  const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+
   const [status, setStatus] = useState({
     open: false,
     type: "success",
@@ -50,12 +51,12 @@ export default function LoginForStore(props) {
   const handleSubmit = (event) => {
     console.log("イベント発火")
     event.preventDefault()
-    addSnack({ type: "success", message: "Snackbar" });
+    addSnack({ type: "success", message: "ログインボタンを押しました" });
     
     axios.post(`${API_HOST}/api/v1/login`, 
       {
         store: {
-            phone_number: phoneNumber, 
+            email: email, 
             password: password
         }
       },
@@ -65,7 +66,7 @@ export default function LoginForStore(props) {
         if(resp.data.logged_in) {
             handleSuccessfulAuthentication(resp.data)
             // ログイン成功メッセージの表示
-            addSnack({ type: "success", message: "成功しました" });
+            addSnack({ type: "success", message: "ログインしました" });
         }
     }).catch(error=> {
         console.log("registration error", error)
@@ -79,13 +80,6 @@ export default function LoginForStore(props) {
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
-        {/* フラッシュメッセージ */}
-        <CustomizedSnackbars
-          open={status.open}
-          handleClose={handleClose}
-          type={status.type}
-          message={status.message}
-        />
         <Box
           sx={{
             marginTop: 8,
@@ -105,13 +99,13 @@ export default function LoginForStore(props) {
               margin="normal"
               required
               fullWidth
-              id="phoneNumber"
-              label="Phone Number"
+              id="email"
+              label="Email"
               name="email"
               autoComplete="off"
               autoFocus
-              value={phoneNumber}
-              onChange={event => setPhoneNumber(event.target.value)}
+              value={email}
+              onChange={event => setEmail(event.target.value)}
             />
             <TextField
               margin="normal"

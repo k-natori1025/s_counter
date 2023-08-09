@@ -28,9 +28,10 @@ function AddPost(props) {
         console.log(resp.data)
         const newPost = resp.data
         console.log('newPostです', newPost)
-        props.setPosts([...props.posts, newPost])
+        props.setPosts([newPost, ...props.posts])
         setContent("")
         setImage("")
+        setPreview("")
     }).catch(e => {
         console.log(e)
     })

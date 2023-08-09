@@ -2,7 +2,7 @@ class Api::V1::PostsController < ApplicationController
 
   def index
     store_id = params[:store_id]
-    posts = Post.where(store_id: store_id)
+    posts = Post.where(store_id: store_id).order(id: :desc)
     render json: posts 
   end
 
@@ -18,7 +18,7 @@ class Api::V1::PostsController < ApplicationController
   def destroy
     if Post.destroy(params[:id])
       store_id = params[:store_id]
-      posts = Post.where(store_id: store_id)
+      posts = Post.where(store_id: store_id).order(id: :desc)
       render json: posts
     else
       render json: { error: "Failed to destroy" }, status: 422

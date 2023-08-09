@@ -20,6 +20,7 @@ function EditStore() {
 
   const [stores, setStores] = useState([])
   const [store, setStore] = useState({})
+
   const [storeName, setStoreName] = useState()
   const [email, setEmail] = useState()
   const [phoneNumber, setPhoneNumber] = useState()
@@ -38,7 +39,7 @@ function EditStore() {
     ) 
       .then(resp => {
         if(resp.data.logged_in) {
-          console.log("ログインステータスをチェックしました")
+          console.log("ログイン中の店舗")
           console.log(resp.data)
           setStore(resp.data.store)
           setStoreName(resp.data.store.store_name)
@@ -47,8 +48,9 @@ function EditStore() {
           setAddress(resp.data.store.address)
           setCapacity(resp.data.store.capacity)
           setNumberOfLockers(resp.data.store.number_of_lockers)
-          setImage(resp.data.store.image)
+          // setImage(resp.data.store.image)
           setDescription(resp.data.store.description)
+          setPreview(resp.data.store.image.url)
         } 
     }).catch(error => {
         console.log("ログインエラーです", error)
@@ -112,8 +114,9 @@ function EditStore() {
     formData.append('store[phone_number]', phoneNumber)
     formData.append('store[address]', address)   
     formData.append('store[number_of_lockers]', numberOfLockers) 
-    formData.append('store[capacity]', capacity)         
-    formData.append('store[image]', image)
+    formData.append('store[capacity]', capacity)
+    // イメージが空であれば送らない         
+    image && formData.append('store[image]', image)
     formData.append('store[description]', description)
     console.log(formData)
     return formData
