@@ -3,12 +3,15 @@ import { useState } from 'react'
 import { Container, Grid, TextField, Box, Button } from '@mui/material'
 import axios from 'axios'
 import { API_HOST } from '../constants'
+import { useSnackbar } from '../hooks/useSnackbar'
 
 function AddPost(props) {
 
   const [content, setContent] = useState("")
   const [image, setImage] = useState("")
   const [preview, setPreview] = useState("")
+
+  const { addSnack } = useSnackbar()
 
   const addPost = async (event) => {
     console.log("イベント発火")
@@ -32,6 +35,7 @@ function AddPost(props) {
         setContent("")
         setImage("")
         setPreview("")
+        addSnack({ type: "success", message: "投稿しました" });
     }).catch(e => {
         console.log(e)
     })

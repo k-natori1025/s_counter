@@ -5,12 +5,15 @@ import axios from 'axios';
 import { API_HOST } from '../constants';
 import { useState } from 'react';
 import { Grid, Button, Container } from '@mui/material';
+import { useSnackbar } from '../hooks/useSnackbar';
 
 export default function AddEvent(props) {
   const [ eventName, setEventName ] = useState("")
   const [ time, setTime ] = useState("")
   const [ person, setPerson ] = useState("")
   const [ heat, setHeat ] = useState("")
+
+  const { addSnack } = useSnackbar()
 
   const addEvent = (e) => {
     e.preventDefault()
@@ -31,6 +34,7 @@ export default function AddEvent(props) {
       setTime("")
       setPerson("")
       setHeat("")
+      addSnack({ type: "success", message: "イベントを追加しました" });
       })
     .catch(e => {
       console.log(e)

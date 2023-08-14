@@ -5,6 +5,7 @@ import { Grid, Container, Box, Button } from '@mui/material';
 import { API_HOST } from '../constants';
 import axios from 'axios'
 import { useState } from 'react';
+import { useSnackbar } from '../hooks/useSnackbar';
 
 const usageTimes = [ '60', '90', '120', '180'];
 
@@ -12,6 +13,8 @@ export default function AddCustomer(props) {
 
   const [ lockerNumber, setLockerNumber ] = useState("")
   const [ usageTime, setUsageTime ] = useState(null)
+
+  const { addSnack } = useSnackbar();
 
   const addCustomer = (e) => {
     e.preventDefault()
@@ -29,6 +32,7 @@ export default function AddCustomer(props) {
       props.setCustomers([...props.customers, newCustomer])
       setLockerNumber("")
       setUsageTime(null)
+      addSnack({ type: "success", message: "サウナーを追加しました" });
       })
     .catch(e => {
       console.log(e)

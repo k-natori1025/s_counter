@@ -14,6 +14,7 @@ import { useState } from 'react'
 import { API_HOST } from '../../constants';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
+import { useSnackbar } from '../../hooks/useSnackbar';
 
 const defaultTheme = createTheme();
 
@@ -32,6 +33,8 @@ export default function SignUpForStore(props) {
 
   const [preview, setPreview] = useState("")
   const navigate = useNavigate()
+
+  const { addSnack } = useSnackbar();
 
   const handleSuccessfulAuthentication = (data) => {
     props.handleLogin(data)
@@ -54,7 +57,10 @@ export default function SignUpForStore(props) {
     ).then(resp=> {
         console.log('registration response', resp)
         if(resp.data.status === 'created') {
-            handleSuccessfulAuthentication(resp.data)
+          handleSuccessfulAuthentication(resp.data)
+          addSnack({ type: "success", message: "新規登録しました" });
+        } else {
+          addSnack({ type: "error", message: "新規登録に失敗しました" });
         }
     }).catch(error=> {
         console.log("registration error", error)

@@ -37,12 +37,12 @@ export const SnackbarProvider = ({ children }) => {
   };
 return (
     <SnackBarContext.Provider value={{ addSnack }}>
-      {children}
       {snacks.map((snack, i) => (
         <Alert key={i} severity={snack.type}>
           {snack.message}
         </Alert>
       ))}
+      {children}
     </SnackBarContext.Provider>
   );
 };
