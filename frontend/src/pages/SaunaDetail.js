@@ -2,6 +2,8 @@ import { React, useState } from 'react'
 import '../App.css'
 import SituationForUser from '../components/SituationForUser'
 import EventsListForUser from '../components/EventsListForUser'
+import AboutStoreForUser from '../components/AboutStoreForUser'
+import PostsListForUser from '../components/PostsListForUser'
 import { Box } from '@mui/material'
 import { useParams } from 'react-router-dom'
 
@@ -18,7 +20,9 @@ function SaunaDetail(props) {
 
   const items = [
     {id: 1, title: "混雑状況", path: "dashboard/situations"},  
-    {id: 2, title: "イベント情報", path: "dashboard/events"}
+    {id: 2, title: "イベント情報", path: "dashboard/events"},
+    {id: 3, title: "店舗情報", path: "dashboard/info"},
+    {id: 4, title: "お知らせ投稿", path: "dashboard/posts"}
   ]
 
   const params = useParams()
@@ -55,6 +59,20 @@ function SaunaDetail(props) {
         <div className="tab__content">
           {store && 
             <EventsListForUser store={store} />
+          }
+        </div>
+      }
+      { active === 3 && 
+        <div className="tab__content">
+          {store && 
+            <AboutStoreForUser store={store} />
+          }
+        </div>
+      }
+      { active === 4 && 
+        <div className="tab__content">
+          {store && 
+            <PostsListForUser store={store} />
           }
         </div>
       }
