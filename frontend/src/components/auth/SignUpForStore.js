@@ -10,7 +10,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { API_HOST } from '../../constants';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
@@ -32,9 +32,21 @@ export default function SignUpForStore(props) {
   const [ description, setDescription ] = useState("")
 
   const [preview, setPreview] = useState("")
+  const [loggedInStatus, setLoggedInStatus] = useState("未ログイン")
+  const [store, setStore] = useState({})
+
   const navigate = useNavigate()
 
   const { addSnack } = useSnackbar();
+
+  // const handleLogin = (data) => {
+  //   console.log("ログイン成功")
+  //   setStore(data.store)
+  //   window.sessionStorage.setItem(['store_id'],[data.store.id]);
+  //   console.log(window.sessionStorage.getItem(['store_id']));
+  //   console.log(data.store)
+  //   setLoggedInStatus(data.store.store_name)
+  // }
 
   const handleSuccessfulAuthentication = (data) => {
     props.handleLogin(data)
@@ -45,27 +57,44 @@ export default function SignUpForStore(props) {
     console.log("イベント発火")
     event.preventDefault()
     const data = await createFormData()
-
     const config = {
       headers: {
         'content-type': 'multipart/form-data'
       }
     }
-
     axios.post(`${API_HOST}/api/v1/stores`, data, config,
       { withCredentials: true }
     ).then(resp=> {
         console.log('registration response', resp)
         if(resp.data.status === 'created') {
-          handleSuccessfulAuthentication(resp.data)
-          addSnack({ type: "success", message: "新規登録しました" });
+          // 登録完了後にログイン処理
+          axios.post(`${API_HOST}/api/v1/login`, 
+          {
+            store: {
+                email: email, 
+                password: password
+            }
+          },
+          { withCredentials: true }
+          ).then(resp=> {
+          console.log('login response', resp)
+          if(resp.data.logged_in) {
+              handleSuccessfulAuthentication(resp.data)
+              // ログイン成功メッセージの表示
+              addSnack({ type: "success", message: "ログインしました" });
+          } else {
+            // ログイン失敗メッセージの表示
+            addSnack({ type: "error", message: resp.data.errors });
+          }
+          }).catch(error=> {
+            console.log("registration error", error)
+          })
         } else {
           addSnack({ type: "error", message: "新規登録に失敗しました" });
         }
     }).catch(error=> {
         console.log("registration error", error)
     })
-    event.preventDefault()
   }
 
   const onFileInputChange = (e) => {

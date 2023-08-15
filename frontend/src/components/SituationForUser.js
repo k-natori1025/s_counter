@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Grid, Card, Typography, Box, CardMedia } from '@mui/material'
+import { Container, Grid, Card, Typography } from '@mui/material'
 import ShowTime from './ShowTime'
 import { useState, useEffect } from 'react'
 import { API_HOST } from '../constants'
@@ -25,7 +25,7 @@ function SituationForUser(props) {
 
   console.log(props.store, "デバッグ")
 
-  const rate = customers.length/props.store.number_of_lockers
+  const rate = customers.length/props.store.capacity
 
   return (<>
     <Grid container >
@@ -112,7 +112,7 @@ function SituationForUser(props) {
                   店内のサウナー数
                 </Grid>
                 <Grid item xs={12} textAlign="center" sx={{ height: "50%", pt: 2 }}>
-                  <Typography fontSize={40} fontWeight="bold">{customers.length}人/{props.store.number_of_lockers}人</Typography>
+                  <Typography fontSize={40} fontWeight="bold">{customers.length}人/{props.store.capacity}人</Typography>
                 </Grid>
               </Grid>
             </Card>

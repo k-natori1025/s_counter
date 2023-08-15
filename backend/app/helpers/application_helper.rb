@@ -5,6 +5,8 @@ module ApplicationHelper
   # end
   
   def current_store
+    puts "="*30
+    puts session[:store_id]
     @current_store ||= Store.find(session[:store_id]) if session[:store_id]
   end
 

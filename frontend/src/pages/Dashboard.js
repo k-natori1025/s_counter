@@ -9,7 +9,7 @@ import PostsList from '../components/PostsList'
 import axios from 'axios'
 import { API_HOST } from '../constants'
 
-const Dashboard = (props) => {
+const Dashboard = () => {
 
   const [active, setActive] = useState(1)
 
@@ -39,8 +39,6 @@ const Dashboard = (props) => {
     checkLoginStatus()
   }, [])
 
-
-
   const items = [
     {id: 1, title: "入退室管理", path: "dashboard/customers"},
     {id: 2, title: "混雑状況", path: "dashboard/situations"},  
@@ -69,17 +67,17 @@ const Dashboard = (props) => {
      
       { active === 1 && 
         <div className="tab__content">
-          <CustomersList store={props.store} />
+          <CustomersList store={store} />
         </div>
       }
       { active === 2 && 
         <div className="tab__content">
-          <Situation store={props.store} />
+          <Situation store={store} />
         </div>
       } 
       { active === 3 && 
         <div className="tab__content">
-          <EventsList store={props.store} />
+          <EventsList store={store} />
         </div>
       }
       { active === 4 && 

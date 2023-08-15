@@ -43,7 +43,7 @@ function AboutStore(props) {
         </Grid>
         <Grid container>
           <Grid item sm={12}>
-            <CardActions sx={{display: "flex", justifyContent: "center"}} >
+            <CardActions sx={{display: "flex", justifyContent: "center", mt: 5}} >
               <Button 
                 style={{ color: "white", fontSize: "18px", backgroundColor: "#f44336", width: "40%", height: 50, marginBottom: 20 }}
                 onClick={goToEditStore}

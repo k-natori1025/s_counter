@@ -23,7 +23,7 @@ function Situation(props) {
     })
   }, [])
 
-  const rate = customers.length/props.store.number_of_lockers
+  const rate = customers.length/props.store.capacity
 
   return (<>
     <Container component="section" maxWidth="lg" sx={{mt:10, mb:10}} >
@@ -105,7 +105,7 @@ function Situation(props) {
                   店内のサウナー数
                 </Grid>
                 <Grid item xs={12} textAlign="center" sx={{ height: "50%", pt: 2 }}>
-                  <Typography fontSize={40} fontWeight="bold">{customers.length}人/{props.store.number_of_lockers}人</Typography>
+                  <Typography fontSize={40} fontWeight="bold">{customers.length}人/{props.store.capacity}人</Typography>
                 </Grid>
               </Grid>
             </Card>

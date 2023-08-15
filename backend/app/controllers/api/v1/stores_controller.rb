@@ -9,6 +9,8 @@ class Api::V1::StoresController < ApplicationController
     @store = Store.new(store_params)
 
     if @store.save
+      @store.authenticate(store_params[:password])
+      session[:store_id] = @store.id
       render json: { status: :created, store: @store }
     else
       render json: { status: 500 }
