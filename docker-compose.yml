@@ -12,6 +12,7 @@ services:
       DB_PASSWORD: password
       DB_HOST: db
       FRONTEND_DOMAIN: "http://localhost:3000"
+      BACKEND_DOMAIN: "http://localhost:3001"
     depends_on:
       - db
     tty: true
