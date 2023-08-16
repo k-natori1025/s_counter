@@ -13,6 +13,7 @@ import { useState, useEffect } from 'react'
 import { API_HOST } from '../constants';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
+import { useSnackbar } from '../hooks/useSnackbar';
 
 const defaultTheme = createTheme();
 
@@ -32,6 +33,8 @@ function EditStore() {
 
   const [preview, setPreview] = useState()
   const navigate = useNavigate()
+
+  const { addSnack } = useSnackbar();
 
   const checkLoginStatus = () => {
     axios.get(`${API_HOST}/api/v1/logged_in`, 
@@ -90,7 +93,8 @@ function EditStore() {
     ).then(resp=> {
         console.log('update response', resp)
         if(resp.data.status === 'updated') {
-            navigate('/dashboard')
+          addSnack({ type: "success", message: "店舗情報を登録しました" });
+          navigate('/dashboard')
         }
     }).catch(error=> {
         console.log("update error", error)

@@ -81,7 +81,7 @@ export default function SignUpForStore(props) {
           if(resp.data.logged_in) {
               handleSuccessfulAuthentication(resp.data)
               // ログイン成功メッセージの表示
-              addSnack({ type: "success", message: "ログインしました" });
+              addSnack({ type: "success", message: "店舗情報を登録しました" });
           } else {
             // ログイン失敗メッセージの表示
             addSnack({ type: "error", message: resp.data.errors });
