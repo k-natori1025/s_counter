@@ -37,6 +37,10 @@ function Situation(props) {
   const [date, setDate] = useState([])
   const [time, setTime] = useState([])
 
+   // n分後を計算
+  const addMinutes = (d, n) => {
+    d.setMinutes(d.getMinutes() + n)
+  }
   // 現時刻から30分後を計算
   useEffect(() => {
     setInterval(() => {
@@ -48,7 +52,7 @@ function Situation(props) {
       const dayname = ['日','月','火','水','木','金','土'];
       setDate(`${year}年 ${month}月${day}日[${dayname[dayofweek]}]`);
       let hour = d.getHours().toString().padStart(2, '0');
-      let minute = (d.getMinutes()+30).toString().padStart(2, '0');
+      let minute = (d.getMinutes()).toString().padStart(2, '0');
       setTime(`${hour}:${minute}`);
     });
   },[])
