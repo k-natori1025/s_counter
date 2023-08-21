@@ -4,6 +4,7 @@ import AddCustomer from './AddCustomer';
 import { useEffect, useState } from 'react';
 import { API_HOST } from '../constants'; 
 import axios from 'axios';
+import CurrentTime from './CurrentTime';
 
 function CustomersList(props){
   const columns = [
@@ -93,6 +94,7 @@ function CustomersList(props){
   }
 
   return (<>
+    <CurrentTime/>
     <AddCustomer store={props.store} customers={customers} setCustomers={setCustomers} />
     <DataGrid 
       rows={row}

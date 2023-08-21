@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Grid, Card, Typography, Box, CardMedia } from '@mui/material'
+import { Container, Grid, Card, Typography } from '@mui/material'
 import ShowTime from './ShowTime'
 import { useState, useEffect } from 'react'
 import { API_HOST } from '../constants'
@@ -24,6 +24,40 @@ function Situation(props) {
   }, [])
 
   const rate = customers.length/props.store.capacity
+
+  // 退出時間を計算
+  const calcExitTime = (created_at, usage_time) => {
+    const date = new Date(created_at);
+    const minutesToAdd = usage_time;
+    date.setMinutes(date.getMinutes() + minutesToAdd);
+    // console.log(date.toLocaleString());
+    return date.toLocaleString()
+  }
+  
+  const [date, setDate] = useState([])
+  const [time, setTime] = useState([])
+
+  // 現時刻から30分後を計算
+  useEffect(() => {
+    setInterval(() => {
+      let d = new Date();
+      let year = d.getFullYear();
+      let month = d.getMonth() + 1;
+      let day = d.getDate();
+      let dayofweek = d.getDay();
+      const dayname = ['日','月','火','水','木','金','土'];
+      setDate(`${year}年 ${month}月${day}日[${dayname[dayofweek]}]`);
+      let hour = d.getHours().toString().padStart(2, '0');
+      let minute = (d.getMinutes()+30).toString().padStart(2, '0');
+      setTime(`${hour}:${minute}`);
+    });
+  },[])
+
+  // 現時刻から30分以内に退出する客の計算
+  const exitingCustomers = customers.filter(function(customer) {
+    const exitingTime = calcExitTime(customer.created_at, customer.usage_time);
+    return exitingTime >= time ;
+  })
 
   return (<>
     <Container component="section" maxWidth="lg" sx={{mt:10, mb:10}} >
@@ -118,6 +152,40 @@ function Situation(props) {
             </Card>
           </Grid>
       </Grid>
+      <Grid container spacing={4}>
+          <Grid item  xs={12} sm={6} sx={{mt: 2}}>
+            <Card
+              style={{ backgroundColor: "rgba(235,230,230,0.7)" }} 
+              sx={{ height: 250, borderRadius: "15px", display: "flex", justifyContent: "center", width: "100%" }}>
+              <Grid container>
+                <Grid item xs={12} textAlign="center" sx={{pt: 2, height: "30%"}} fontSize={20}>
+                  30分以内に退出する客数
+                </Grid>
+                <Grid item xs={12} textAlign="center" sx={{ height: "30%"}} fontSize={20}>
+                  30分後の時間:{time}
+                </Grid>
+                <Grid item xs={12} textAlign="center" sx={{ height: "50%", pt: 2 }}>
+                  <Typography fontSize={40} fontWeight="bold">{exitingCustomers.length}人</Typography>
+                </Grid>
+              </Grid>
+            </Card>
+          </Grid>
+          <Grid item  xs={12} sm={6} sx={{mt: 2}}>
+            <Card
+              style={{ backgroundColor: "rgba(235,230,230,0.7)" }} 
+              sx={{ height: 250, borderRadius: "15px", display: "flex", justifyContent: "center", width: "100%" }}>
+              <Grid container>
+                <Grid item xs={12} textAlign="center" sx={{ height: "50%", pt: 2 }}>
+                  <Typography fontSize={30} fontWeight="bold">【混雑状況の基準】</Typography>
+                  <Typography fontSize={15} sx={{pt: 2}}>サ室の収容人数に対するお客さんの数が30%以下→空いている</Typography>
+                  <Typography fontSize={15} sx={{pt: 2}}>サ室の収容人数に対するお客さんの数が50%以下→普通</Typography>
+                  <Typography fontSize={15} sx={{pt: 2}}>サ室の収容人数に対するお客さんの数が80%以下→やや混んでいる</Typography>
+                  <Typography fontSize={15} sx={{pt: 2}}>サ室の収容人数に対するお客さんの数が80%以上→混んでいる</Typography>
+                </Grid>
+              </Grid>
+            </Card>
+          </Grid>
+        </Grid>
     </Container>
   </>)
 }
