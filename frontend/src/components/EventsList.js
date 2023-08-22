@@ -4,8 +4,6 @@ import { useEffect, useState } from 'react';
 import { API_HOST } from '../constants';
 import axios from 'axios';
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import { Link } from 'react-router-dom';
 import AddEvent from './AddEvent';
 
 function EventsList(props){

@@ -1,4 +1,4 @@
-import { React, useState } from 'react'
+import { React, useState, useEffect } from 'react'
 import '../App.css'
 import SituationForUser from '../components/SituationForUser'
 import EventsListForUser from '../components/EventsListForUser'
@@ -6,12 +6,13 @@ import AboutStoreForUser from '../components/AboutStoreForUser'
 import PostsListForUser from '../components/PostsListForUser'
 import { Box } from '@mui/material'
 import { useParams } from 'react-router-dom'
+import axios from 'axios'
+import { API_HOST } from '../constants'
 
-
-function SaunaDetail(props) {
+function SaunaDetail() {
 
   const [active, setActive] = useState(1)
-  // const [store, setStore] = useState({})
+  const [store, setStore] = useState({})
 
   const activate = (id) => {
     console.log(id)
@@ -27,9 +28,18 @@ function SaunaDetail(props) {
 
   const params = useParams()
 
-  const store = props.stores.find( store => {
-    return store.id === parseInt(params.id, 10)
-  })
+  // const store = props.stores.find( store => {
+  //   return store.id === parseInt(params.id, 10)
+  // })
+
+  useEffect(()=> {
+    axios.get(`${API_HOST}/api/v1/stores/${params.id}`)
+    .then( resp => {
+      const newStore = JSON.parse(JSON.stringify(resp.data))
+      console.log(newStore)
+      setStore(newStore)
+    })
+  }, [])
   
   return(<>
     <Box sx={{

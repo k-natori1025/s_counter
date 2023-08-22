@@ -4,6 +4,7 @@ import ShowTime from './ShowTime'
 import { useState, useEffect } from 'react'
 import { API_HOST } from '../constants'
 import axios from 'axios'
+import { addMinutes, format } from 'date-fns'
 
 function Situation(props) {
 
@@ -28,39 +29,30 @@ function Situation(props) {
   // 退出時間を計算
   const calcExitTime = (created_at, usage_time) => {
     const date = new Date(created_at);
-    const minutesToAdd = usage_time;
-    date.setMinutes(date.getMinutes() + minutesToAdd);
-    // console.log(date.toLocaleString());
-    return date.toLocaleString()
+    // 入室時間に利用時間を足す
+    const result = addMinutes(date, usage_time)
+    return result
   }
   
-  const [date, setDate] = useState([])
-  const [time, setTime] = useState([])
+  const [time, setTime] = useState(new Date())
 
-   // n分後を計算
-  const addMinutes = (d, n) => {
-    d.setMinutes(d.getMinutes() + n)
-  }
+  // n分後を計算
+  // const addMinutes = (d, n) => {
+  //   d.setMinutes(d.getMinutes() + n)
+  // }
   // 現時刻から30分後を計算
   useEffect(() => {
     setInterval(() => {
       let d = new Date();
-      let year = d.getFullYear();
-      let month = d.getMonth() + 1;
-      let day = d.getDate();
-      let dayofweek = d.getDay();
-      const dayname = ['日','月','火','水','木','金','土'];
-      setDate(`${year}年 ${month}月${day}日[${dayname[dayofweek]}]`);
-      let hour = d.getHours().toString().padStart(2, '0');
-      let minute = (d.getMinutes()).toString().padStart(2, '0');
-      setTime(`${hour}:${minute}`);
+      const result = addMinutes(d, 30)
+      setTime(result);
     });
   },[])
 
   // 現時刻から30分以内に退出する客の計算
   const exitingCustomers = customers.filter(function(customer) {
     const exitingTime = calcExitTime(customer.created_at, customer.usage_time);
-    return exitingTime >= time ;
+    return exitingTime <= time ;
   })
 
   return (<>
@@ -165,10 +157,10 @@ function Situation(props) {
                 <Grid item xs={12} textAlign="center" sx={{pt: 2, height: "30%"}} fontSize={20}>
                   30分以内に退出する客数
                 </Grid>
-                <Grid item xs={12} textAlign="center" sx={{ height: "30%"}} fontSize={20}>
-                  30分後の時間:{time}
+                <Grid item xs={12} textAlign="center" sx={{ height: "30%"}} fontSize={15}>
+                  30分後の時間:{format(time, 'H:mm')}
                 </Grid>
-                <Grid item xs={12} textAlign="center" sx={{ height: "50%", pt: 2 }}>
+                <Grid item xs={12} textAlign="center" sx={{ height: "50%"}}>
                   <Typography fontSize={40} fontWeight="bold">{exitingCustomers.length}人</Typography>
                 </Grid>
               </Grid>

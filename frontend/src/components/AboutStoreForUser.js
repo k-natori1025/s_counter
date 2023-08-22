@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Grid, CardContent, CardMedia, Typography, Button, CardActions } from '@mui/material'
+import { Container, Grid, CardContent, CardMedia, Typography } from '@mui/material'
 
 function AboutStoreForUser(props) {
   

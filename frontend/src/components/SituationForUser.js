@@ -4,6 +4,7 @@ import ShowTime from './ShowTime'
 import { useState, useEffect } from 'react'
 import { API_HOST } from '../constants'
 import axios from 'axios'
+import { addMinutes, format } from 'date-fns'
 
 function SituationForUser(props) {
 
@@ -24,8 +25,36 @@ function SituationForUser(props) {
   }, [])
 
   console.log(props.store, "デバッグ")
+  // if(props.store) {
+  //   debugger
+  // }
 
   const rate = customers.length/props.store.capacity
+
+  // 退出時間を計算
+  const calcExitTime = (created_at, usage_time) => {
+    const date = new Date(created_at);
+    // 入室時間に利用時間を足す
+    const result = addMinutes(date, usage_time)
+    return result
+  }
+  
+  const [time, setTime] = useState(new Date())
+
+  // 現時刻から30分後を計算
+  useEffect(() => {
+    setInterval(() => {
+      let d = new Date();
+      const result = addMinutes(d, 30)
+      setTime(result);
+    });
+  },[])
+
+  // 現時刻から30分以内に退出する客の計算
+  const exitingCustomers = customers.filter(function(customer) {
+    const exitingTime = calcExitTime(customer.created_at, customer.usage_time);
+    return exitingTime <= time ;
+  })
 
   return (<>
     <Grid container >
@@ -125,6 +154,40 @@ function SituationForUser(props) {
             </Card>
           </Grid>
       </Grid>
+      <Grid container spacing={4}>
+          <Grid item  xs={12} sm={6} sx={{mt: 2}}>
+            <Card
+              style={{ backgroundColor: "rgba(235,230,230,0.7)" }} 
+              sx={{ height: 250, borderRadius: "15px", display: "flex", justifyContent: "center", width: "100%" }}>
+              <Grid container>
+                <Grid item xs={12} textAlign="center" sx={{pt: 2, height: "30%"}} fontSize={20}>
+                  30分以内に退出する客数
+                </Grid>
+                <Grid item xs={12} textAlign="center" sx={{ height: "30%"}} fontSize={15}>
+                  30分後の時間:{format(time, 'H:mm')}
+                </Grid>
+                <Grid item xs={12} textAlign="center" sx={{ height: "50%"}}>
+                  <Typography fontSize={40} fontWeight="bold">{exitingCustomers.length}人</Typography>
+                </Grid>
+              </Grid>
+            </Card>
+          </Grid>
+          <Grid item  xs={12} sm={6} sx={{mt: 2}}>
+            <Card
+              style={{ backgroundColor: "rgba(235,230,230,0.7)" }} 
+              sx={{ height: 250, borderRadius: "15px", display: "flex", justifyContent: "center", width: "100%" }}>
+              <Grid container>
+                <Grid item xs={12} textAlign="center" sx={{ height: "50%", pt: 2 }}>
+                  <Typography fontSize={30} fontWeight="bold">【混雑状況の基準】</Typography>
+                  <Typography fontSize={15} sx={{pt: 2}}>サ室の収容人数に対するお客さんの数が30%以下→空いている</Typography>
+                  <Typography fontSize={15} sx={{pt: 2}}>サ室の収容人数に対するお客さんの数が50%以下→普通</Typography>
+                  <Typography fontSize={15} sx={{pt: 2}}>サ室の収容人数に対するお客さんの数が80%以下→やや混んでいる</Typography>
+                  <Typography fontSize={15} sx={{pt: 2}}>サ室の収容人数に対するお客さんの数が80%以上→混んでいる</Typography>
+                </Grid>
+              </Grid>
+            </Card>
+          </Grid>
+        </Grid>
     </Container>
   </>)
 }

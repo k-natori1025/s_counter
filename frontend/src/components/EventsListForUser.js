@@ -1,4 +1,3 @@
-import { Grid, Button } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import { useEffect, useState } from 'react';
 import { API_HOST } from '../constants';
@@ -12,9 +11,6 @@ function EventsListForUser(props){
     { field: 'time', headerName: '開始時間', width: 240 },
     { field: 'person', headerName: '担当者', width: 240 },
     { field: 'heat', headerName: '熱さ', width: 240 },
-    // { field: 'button', headerName: '削除ボタン', width: 240, 
-    //   renderCell: (params) => <Button onClick={ e => removeEvent(params.id, e)} style={{ color: "white", backgroundColor: "#f44336" }}>削除</Button>
-    // },
   ];
 
   const [ events, setEvents ] = useState([])
