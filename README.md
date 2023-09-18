@@ -61,28 +61,28 @@
 
 
 # 機能一覧
-- 施設側
-  - 店舗新規作成
-  - ログイン機能
-  - ログアウト機能
-  - 店舗情報編集
+### 施設側
+- 店舗新規作成
+- ログイン機能
+- ログアウト機能
+- 店舗情報編集
 
 https://github.com/k-natori1025/s_counter/assets/130017253/05ac5e62-cfae-48c0-b295-65d08ad9b7ab
 
-  - 客の入退管理
+- 客の入退管理
 
 https://github.com/k-natori1025/s_counter/assets/130017253/299c8bf3-05fe-4234-8b03-d93cacc2f545
 
-  - 投稿機能
-  - 画像投稿機能
-  - 投稿画像のプレビュー
+- 投稿機能
+- 画像投稿機能
+- 投稿画像のプレビュー
 
 https://github.com/k-natori1025/s_counter/assets/130017253/0631d56e-08ed-4737-b96b-8ae247888d87
 
-- 施設利用者
-  - 施設情報の閲覧
-  - 施設検索機能
-  - 施設側の投稿閲覧
+### 施設利用者
+- 施設情報の閲覧
+- 施設検索機能
+- 施設側の投稿閲覧
 
 https://github.com/k-natori1025/s_counter/assets/130017253/c67af231-4a09-4cde-ae01-80917f6a94f1
 
